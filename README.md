@@ -37,6 +37,7 @@ BugRadar watches your log files, Docker containers, and system metrics in real-t
 - [Rust](https://rustup.rs/) 1.77+
 - [Node.js](https://nodejs.org/) 20+
 - [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
+- [Ollama](https://ollama.ai) or Claude API key (for AI analysis)
 - macOS / Windows / Linux
 
 ---
@@ -48,12 +49,7 @@ git clone https://github.com/9t29zhmwdh-coder/BugRadar
 cd BugRadar
 
 cd frontend && npm install && cd ..
-
-# Development mode
 cargo tauri dev
-
-# Release build
-cargo tauri build
 ```
 
 ### CLI Only
