@@ -25,7 +25,7 @@ BugRadar watches your log files, Docker containers, and system metrics in real-t
 | **Multi-Format Parsing** | JSON, plaintext, nginx, Docker — with stacktrace merging |
 | **Anomaly Detection** | Rolling-window analysis: error spikes, latency jumps, memory leaks |
 | **Incident Grouping** | Correlates anomalies into incidents within configurable time windows |
-| **AI Root-Cause Analysis** | Claude Haiku or local Ollama generates structured fix suggestions |
+| **AI Root-Cause Analysis** | Local AI (Ollama) generates structured fix suggestions |
 | **System Monitoring** | CPU, RAM, Disk, Network, Docker container status |
 | **Config Inspector** | Analyzes YAML/JSON/TOML files for issues and conflicts |
 | **Timeline View** | Recharts-powered anomaly timeline and heatmap |
@@ -37,7 +37,7 @@ BugRadar watches your log files, Docker containers, and system metrics in real-t
 - [Rust](https://rustup.rs/) 1.77+
 - [Node.js](https://nodejs.org/) 20+
 - [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
-- [Ollama](https://ollama.ai) or Claude API key (for AI analysis)
+- [Ollama](https://ollama.ai) (for AI analysis)
 - macOS / Windows / Linux
 
 ---
@@ -68,7 +68,7 @@ bugradar incidents --open
 
 | Provider | Setup |
 |---|---|
-| **Claude (Anthropic)** | Enter API key in Settings → saved securely in Keychain |
+| **Ollama** | Set URL in Settings (default: `http://localhost:11434`) |
 | **Ollama (local)** | Install [Ollama](https://ollama.ai), run `ollama pull llama3.2` |
 
 AI analysis is triggered automatically when an incident reaches **High severity** with at least **3 anomalies** (30s debounce to avoid API spam).
