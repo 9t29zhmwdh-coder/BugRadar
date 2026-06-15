@@ -27,7 +27,7 @@ impl IncidentGrouper {
         // same source_id OR same anomaly kind, AND last_seen within correlation window
         let matching_id = self.open_incidents
             .iter()
-            .filter(|(_, i| {
+            .filter(|(_, i)| {
                 i.last_seen + correlation_window >= now
                     && (i.source_ids.contains(&anomaly.source_id)
                         || i.anomaly_ids.is_empty())  // fresh incident always matches

@@ -36,7 +36,6 @@ async fn main() {
                 };
 
                 if let Some(rx) = log_rx {
-                    let engine = state.anomaly_engine.lock().await;
                     let anomaly_rx_opt = {
                         let mut eng = state.anomaly_engine.lock().await;
                         eng.spawn(rx);

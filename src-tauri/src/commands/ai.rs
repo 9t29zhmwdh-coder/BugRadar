@@ -17,7 +17,6 @@ pub async fn trigger_ai_analysis(incident_id: String, app: AppHandle, state: Sta
     let _ = app.emit(&format!("ai://analysis/started/{}", incident_id), ());
 
     // Build context
-    let anomaly_ids = incident.anomaly_ids.clone();
     let recent_errors = queries::get_recent_logs(&state.db.pool, &incident.source_ids.first().cloned().unwrap_or_default(), 20).await?;
 
     let ctx = IncidentContext {
