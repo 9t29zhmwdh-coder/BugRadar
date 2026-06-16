@@ -1,7 +1,7 @@
-use chrono::{DateTime, Duration, Utc};
+use chrono::{Duration, Utc};
 use std::collections::HashMap;
 
-use crate::models::anomaly::{Anomaly, AnomalyConfig, Severity};
+use crate::models::anomaly::{Anomaly, AnomalyConfig};
 use crate::models::incident::Incident;
 
 pub struct IncidentGrouper {
