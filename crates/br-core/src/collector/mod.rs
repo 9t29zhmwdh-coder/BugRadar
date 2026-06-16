@@ -2,7 +2,6 @@ pub mod file_watcher;
 pub mod docker_collector;
 pub mod parser;
 
-use std::collections::HashMap;
 use std::path::PathBuf;
 
 use dashmap::DashMap;
