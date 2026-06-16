@@ -53,19 +53,17 @@ fn check_common_issues(v: &serde_yaml::Value, issues: &mut Vec<ConfigIssue>, pre
             let key_str = k.as_str().unwrap_or("<key>");
             let full_key = if prefix.is_empty() { key_str.to_string() } else { format!("{}.{}", prefix, key_str) };
 
-            // Check for empty values on important-sounding keys
-            if matches!(key_str, "host" | "password" | "secret" | "token" | "key" | "url" | "database") {
-                if val.is_null() || val.as_str().map(|s| s.is_empty()).unwrap_or(false) {
-                    issues.push(ConfigIssue {
-                        severity: "warning".to_string(),
-                        key: full_key.clone(),
-                        message: format!("Key '{}' appears to be empty or null", full_key),
-                        suggestion: Some("Ensure this value is set correctly".to_string()),
-                    });
-                }
+            if matches!(key_str, "host" | "password" | "secret" | "token" | "key" | "url" | "database")
+                && (val.is_null() || val.as_str().map(|s| s.is_empty()).unwrap_or(false))
+            {
+                issues.push(ConfigIssue {
+                    severity: "warning".to_string(),
+                    key: full_key.clone(),
+                    message: format!("Key '{}' appears to be empty or null", full_key),
+                    suggestion: Some("Ensure this value is set correctly".to_string()),
+                });
             }
 
-            // Check for port conflicts
             if key_str == "port" {
                 if let Some(port) = val.as_u64() {
                     if port < 1024 {
