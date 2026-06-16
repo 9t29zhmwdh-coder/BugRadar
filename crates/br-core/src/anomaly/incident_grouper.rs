@@ -30,8 +30,8 @@ impl IncidentGrouper {
             .filter(|(_, i)| {
                 i.last_seen + correlation_window >= now
                     && (i.source_ids.contains(&anomaly.source_id)
-                        || i.anomaly_ids.is_empty())  // fresh incident always matches
-            }))
+                        || i.anomaly_ids.is_empty())
+            })
             .max_by_key(|(_, i)| i.last_seen)
             .map(|(id, _)| id.clone());
 
