@@ -4,7 +4,7 @@ use futures_util::StreamExt;
 use tokio::sync::mpsc;
 use tracing::{info, warn};
 
-use crate::models::log_entry::{LogEntry, LogLevel};
+use crate::models::log_entry::LogEntry;
 use crate::plugin::LogParserPlugin;
 
 pub struct DockerCollector {
@@ -44,7 +44,7 @@ impl DockerCollector {
                 match msg {
                     Ok(log_output) => {
                         let line = log_output.to_string();
-                        let line = line.trim_end_matches('\n');
+                        let line = line.trim_end_matches(n);
 
                         if let Some(mut entry) = parser.push_line(line) {
                             entry.source_id = source_id.clone();
@@ -70,7 +70,6 @@ impl DockerCollector {
 
     pub async fn list_containers(&self) -> anyhow::Result<Vec<(String, String)>> {
         use bollard::container::ListContainersOptions;
-        use std::collections::HashMap;
 
         let options = ListContainersOptions::<String> {
             all: false,
@@ -82,7 +81,7 @@ impl DockerCollector {
             .into_iter()
             .filter_map(|c| {
                 let id = c.id?;
-                let name = c.names?.into_iter().next()?.trim_start_matches('/').to_string();
+                let name = c.names?.into_iter().next()?.trim_start_matches(/).to_string();
                 Some((id, name))
             })
             .collect();
