@@ -54,7 +54,7 @@ impl PlaintextParser {
 
     fn parse_level(&self, line: &str) -> LogLevel {
         self.level_re.find(line)
-            .map(|m| LogLevel::from_str(m.as_str()))
+            .map(|m| LogLevel::parse_level(m.as_str()))
             .unwrap_or(LogLevel::Info)
     }
 
