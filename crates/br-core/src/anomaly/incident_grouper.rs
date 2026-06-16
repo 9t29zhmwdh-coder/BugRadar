@@ -58,9 +58,9 @@ impl IncidentGrouper {
 
     fn generate_title(anomaly: &Anomaly) -> String {
         format!(
-            "{} detected ({}x baseline) on {}",
+            "{} detected ({:.1}x baseline) on {}",
             anomaly.kind.label(),
-            format!("{:.1}", anomaly.deviation_factor),
+            anomaly.deviation_factor,
             &anomaly.source_id[..anomaly.source_id.len().min(20)]
         )
     }
