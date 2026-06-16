@@ -30,7 +30,7 @@ impl PluginRegistry {
 
     pub fn detect(&self, source_path: &str) -> Option<&str> {
         for (id, factory) in &self.factories {
-            if factory.create("", source_path).as_ref().map(|p| p.can_handle(source_path)).unwrap_or(false) {
+            if factory.create("", source_path).can_handle(source_path) {
                 return Some(id.as_str());
             }
         }
