@@ -92,3 +92,9 @@ impl LogCollector {
         self.active_tasks.iter().map(|e| e.key().clone()).collect()
     }
 }
+
+impl Default for LogCollector {
+    fn default() -> Self {
+        Self::new()
+    }
+}
