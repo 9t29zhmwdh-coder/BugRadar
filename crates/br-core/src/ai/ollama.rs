@@ -4,7 +4,7 @@ use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
 use super::{AiAnalyzer, prompts::{build_analysis_prompt, IncidentContext}};
-use crate::models::report::{DiagnosticReport, FixSuggestion, ConfigConflict, CodeSnippet};
+use crate::models::report::DiagnosticReport;
 
 #[derive(Serialize)]
 struct OllamaRequest {
