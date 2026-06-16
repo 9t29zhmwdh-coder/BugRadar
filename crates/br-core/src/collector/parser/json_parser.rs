@@ -23,7 +23,7 @@ impl JsonParser {
             .or_else(|| v.get("lvl"))
             .and_then(|l| l.as_str())
             .unwrap_or("info");
-        LogLevel::from_str(level_str)
+        LogLevel::parse_level(level_str)
     }
 
     fn extract_message(v: &serde_json::Value) -> String {
