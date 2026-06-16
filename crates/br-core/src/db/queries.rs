@@ -2,7 +2,7 @@ use anyhow::Result;
 use sqlx::SqlitePool;
 
 use crate::models::{
-    log_entry::{LogEntry, WatchSource},
+    log_entry::{LogEntry, LogLevel, WatchSource},
     anomaly::Anomaly,
     incident::{Incident, IncidentFilter, IncidentStatus},
     report::DiagnosticReport,
@@ -59,7 +59,7 @@ pub async fn delete_watch_source(pool: &SqlitePool, id: &str) -> Result<()> {
 pub async fn insert_log_entry(pool: &SqlitePool, entry: &LogEntry) -> Result<()> {
     let level_str = serde_json::to_string(&entry.level)?;
     let level_str = level_str.trim_matches('"').to_string();
-    let stacktrace_json = entry.stacktrace.as_ref().map(|s| serde_json::to_string(s)).transpose()?;
+    let stacktrace_json = entry.stacktrace.as_ref().map(serde_json::to_string).transpose()?;
     let fields_json = serde_json::to_string(&entry.fields)?;
     let raw_lines_json = serde_json::to_string(&entry.raw_lines)?;
 
@@ -101,7 +101,7 @@ pub async fn get_recent_logs(pool: &SqlitePool, source_id: &str, limit: i64) -> 
             source_id,
             source_path,
             timestamp: timestamp.parse()?,
-            level: crate::models::log_entry::LogLevel::from_str(&level),
+            level: LogLevel::parse_level(&level),
             message,
             stacktrace: stacktrace.map(|s| serde_json::from_str(&s)).transpose()?,
             fields: serde_json::from_str(&fields)?,
