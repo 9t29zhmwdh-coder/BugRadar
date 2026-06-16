@@ -1,11 +1,10 @@
 use std::collections::HashMap;
 use std::io::{Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
 use std::time::Duration;
 
-use notify_debouncer_full::{new_debouncer, DebounceEventResult, Debouncer, FileIdMap};
-use notify::{RecommendedWatcher, RecursiveMode};
+use notify_debouncer_full::{new_debouncer, DebounceEventResult};
+use notify::{RecursiveMode, Watcher};
 use tokio::sync::mpsc;
 use tracing::{debug, warn};
 
@@ -27,7 +26,7 @@ impl FileWatcher {
     pub async fn tail_file(
         &mut self,
         path: &Path,
-        source_id: &str,
+        _source_id: &str,
         parser: &mut Box<dyn LogParserPlugin>,
     ) {
         let offset = self.offsets.entry(path.to_path_buf()).or_insert(0);
