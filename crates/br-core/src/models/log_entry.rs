@@ -15,7 +15,7 @@ pub enum LogLevel {
 }
 
 impl LogLevel {
-    pub fn from_str(s: &str) -> Self {
+    pub fn parse_level(s: &str) -> Self {
         match s.to_ascii_lowercase().as_str() {
             "trace" => Self::Trace,
             "debug" | "dbg" => Self::Debug,
