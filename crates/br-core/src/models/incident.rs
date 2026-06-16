@@ -4,19 +4,14 @@ use uuid::Uuid;
 
 use super::anomaly::Severity;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Default)]
 #[serde(rename_all = "snake_case")]
 pub enum IncidentStatus {
+    #[default]
     Open,
     Investigating,
     Resolved,
     Suppressed,
-}
-
-impl Default for IncidentStatus {
-    fn default() -> Self {
-        Self::Open
-    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
