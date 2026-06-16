@@ -65,33 +65,27 @@ impl ClaudeAnalyzer {
     }
 
     fn parse_fix_suggestions(raw: &[serde_json::Value]) -> Vec<FixSuggestion> {
-        raw.iter().filter_map(|v| {
-            Some(FixSuggestion {
-                priority: v["priority"].as_u64().unwrap_or(5) as u8,
-                title: v["title"].as_str().unwrap_or("Fix").to_string(),
-                description: v["description"].as_str().unwrap_or("").to_string(),
-                command: v["command"].as_str().map(|s| s.to_string()),
-                code_snippet: v.get("code_snippet").and_then(|cs| {
-                    Some(CodeSnippet {
-                        language: cs["language"].as_str().unwrap_or("text").to_string(),
-                        filename: cs["filename"].as_str().map(|s| s.to_string()),
-                        content: cs["content"].as_str().unwrap_or("").to_string(),
-                        diff: cs["diff"].as_str().map(|s| s.to_string()),
-                    })
-                }),
-            })
+        raw.iter().map(|v| FixSuggestion {
+            priority: v["priority"].as_u64().unwrap_or(5) as u8,
+            title: v["title"].as_str().unwrap_or("Fix").to_string(),
+            description: v["description"].as_str().unwrap_or("").to_string(),
+            command: v["command"].as_str().map(|s| s.to_string()),
+            code_snippet: v.get("code_snippet").map(|cs| CodeSnippet {
+                language: cs["language"].as_str().unwrap_or("text").to_string(),
+                filename: cs["filename"].as_str().map(|s| s.to_string()),
+                content: cs["content"].as_str().unwrap_or("").to_string(),
+                diff: cs["diff"].as_str().map(|s| s.to_string()),
+            }),
         }).collect()
     }
 
     fn parse_config_conflicts(raw: &[serde_json::Value]) -> Vec<ConfigConflict> {
-        raw.iter().filter_map(|v| {
-            Some(ConfigConflict {
-                file_path: v["file_path"].as_str().unwrap_or("").to_string(),
-                key: v["key"].as_str().unwrap_or("").to_string(),
-                current_value: v["current_value"].as_str().unwrap_or("").to_string(),
-                suggested_value: v["suggested_value"].as_str().unwrap_or("").to_string(),
-                reason: v["reason"].as_str().unwrap_or("").to_string(),
-            })
+        raw.iter().map(|v| ConfigConflict {
+            file_path: v["file_path"].as_str().unwrap_or("").to_string(),
+            key: v["key"].as_str().unwrap_or("").to_string(),
+            current_value: v["current_value"].as_str().unwrap_or("").to_string(),
+            suggested_value: v["suggested_value"].as_str().unwrap_or("").to_string(),
+            reason: v["reason"].as_str().unwrap_or("").to_string(),
         }).collect()
     }
 }
