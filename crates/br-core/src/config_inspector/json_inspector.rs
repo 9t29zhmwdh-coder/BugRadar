@@ -50,15 +50,15 @@ fn check_issues(v: &serde_json::Value, issues: &mut Vec<ConfigIssue>, prefix: &s
         for (key, val) in map {
             let full_key = if prefix.is_empty() { key.clone() } else { format!("{}.{}", prefix, key) };
 
-            if matches!(key.as_str(), "password" | "secret" | "token" | "apiKey" | "api_key") {
-                if val.as_str().map(|s| s.is_empty()).unwrap_or(false) || val.is_null() {
-                    issues.push(ConfigIssue {
-                        severity: "warning".to_string(),
-                        key: full_key.clone(),
-                        message: format!("Sensitive key '{}' is empty", full_key),
-                        suggestion: None,
-                    });
-                }
+            if matches!(key.as_str(), "password" | "secret" | "token" | "apiKey" | "api_key")
+                && (val.as_str().map(|s| s.is_empty()).unwrap_or(false) || val.is_null())
+            {
+                issues.push(ConfigIssue {
+                    severity: "warning".to_string(),
+                    key: full_key.clone(),
+                    message: format!("Sensitive key '{}' is empty", full_key),
+                    suggestion: None,
+                });
             }
 
             check_issues(val, issues, &full_key);
