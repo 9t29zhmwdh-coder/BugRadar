@@ -49,15 +49,15 @@ fn check_issues(v: &toml::Value, issues: &mut Vec<ConfigIssue>, prefix: &str) {
     if let toml::Value::Table(map) = v {
         for (key, val) in map {
             let full_key = if prefix.is_empty() { key.clone() } else { format!("{}.{}", prefix, key) };
-            if matches!(key.as_str(), "password" | "secret" | "token") {
-                if val.as_str().map(|s| s.is_empty()).unwrap_or(false) {
-                    issues.push(ConfigIssue {
-                        severity: "warning".to_string(),
-                        key: full_key.clone(),
-                        message: format!("Sensitive key '{}' is empty", full_key),
-                        suggestion: None,
-                    });
-                }
+            if matches!(key.as_str(), "password" | "secret" | "token")
+                && val.as_str().map(|s| s.is_empty()).unwrap_or(false)
+            {
+                issues.push(ConfigIssue {
+                    severity: "warning".to_string(),
+                    key: full_key.clone(),
+                    message: format!("Sensitive key '{}' is empty", full_key),
+                    suggestion: None,
+                });
             }
             check_issues(val, issues, &full_key);
         }
