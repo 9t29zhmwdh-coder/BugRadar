@@ -2,6 +2,8 @@
   <img src="RayStudio.png" alt="RayStudio Logo" width="120"/>
 
   <h1>BugRadar</h1>
+
+  [![CI](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/ci.yml)
 </div>
 
 [🇩🇪 Deutsche Version](README.de.md)
