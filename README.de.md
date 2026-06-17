@@ -6,7 +6,7 @@
 
 [🇬🇧 English Version](README.md)
 
-**KI-gestütztes Echtzeit-Diagnose- und Monitoring-Tool — entwickelt mit Rust + Tauri.**
+**KI-gestütztes Echtzeit-Diagnose- und Monitoring-Tool, entwickelt mit Rust und Tauri.**
 
 BugRadar überwacht Logdateien, Docker-Container und Systemmetriken in Echtzeit, erkennt Anomalien automatisch, gruppiert sie zu Incidents und generiert AI-basierte Root-Cause-Analysen mit konkreten Fix-Vorschlägen.
 
@@ -22,7 +22,7 @@ BugRadar überwacht Logdateien, Docker-Container und Systemmetriken in Echtzeit,
 | Funktion | Beschreibung |
 |---|---|
 | **Log-Überwachung** | Echtzeit File-Tailing + Docker-Container Log-Streaming |
-| **Multi-Format-Parser** | JSON, Plaintext, Nginx, Docker — mit Stacktrace-Zusammenführung |
+| **Multi-Format-Parser** | JSON, Plaintext, Nginx, Docker: mit Stacktrace-Zusammenführung |
 | **Anomalie-Erkennung** | Rolling-Window-Analyse: Fehler-Spikes, Latenz-Sprünge, Memory Leaks |
 | **Incident-Gruppierung** | Korreliert Anomalien innerhalb konfigurierbarer Zeitfenster |
 | **KI-Root-Cause-Analyse** | Claude Haiku oder lokales Ollama generiert strukturierte Fix-Vorschläge |
