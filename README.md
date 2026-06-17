@@ -7,7 +7,7 @@
 
 [🇩🇪 Deutsche Version](README.de.md)
 
-**AI-powered real-time diagnostics and monitoring tool — built with Rust + Tauri.**
+**AI-powered real-time diagnostics and monitoring tool, built with Rust and Tauri.**
 
 BugRadar watches your log files, Docker containers, and system metrics in real-time, automatically detects anomalies, groups them into incidents, and generates AI-driven root-cause analyses with actionable fix suggestions.
 
@@ -24,7 +24,7 @@ BugRadar watches your log files, Docker containers, and system metrics in real-t
 | Feature | Description |
 |---|---|
 | **Log Watching** | Real-time file tailing + Docker container log streaming |
-| **Multi-Format Parsing** | JSON, plaintext, nginx, Docker — with stacktrace merging |
+| **Multi-Format Parsing** | JSON, plaintext, nginx, Docker: with stacktrace merging |
 | **Anomaly Detection** | Rolling-window analysis: error spikes, latency jumps, memory leaks |
 | **Incident Grouping** | Correlates anomalies into incidents within configurable time windows |
 | **AI Root-Cause Analysis** | Local AI (Ollama) generates structured fix suggestions |
