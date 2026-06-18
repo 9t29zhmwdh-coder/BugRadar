@@ -1,10 +1,10 @@
-# Privacy Policy — BugRadar
+# Privacy Policy : BugRadar
 
 ## Summary
 
 BugRadar processes all data locally. No data ever leaves your device.
 
-## What We Collect
+## What I Collect
 
 **Nothing.** BugRadar does not collect, store, transmit, or share any user data.
 
