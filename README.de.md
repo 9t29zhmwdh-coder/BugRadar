@@ -78,10 +78,10 @@ Die KI-Analyse wird automatisch ausgelöst, wenn ein Incident **High Severity** 
 
 ```
 BugRadar/
-├── crates/br-core/      — Rust: Collector, Anomalie-Engine, KI, Sysmon, DB
-├── crates/br-cli/       — CLI-Binary (bugradar)
-├── src-tauri/           — Tauri v2 Backend + IPC-Commands
-└── frontend/            — React + TypeScript + Tailwind + Recharts
+├── crates/br-core/      # Rust: Collector, Anomalie-Engine, KI, Sysmon, DB
+├── crates/br-cli/       # CLI-Binary (bugradar)
+├── src-tauri/           # Tauri v2 Backend + IPC-Commands
+└── frontend/            # React + TypeScript + Tailwind + Recharts
 ```
 
 ### Datenfluss
