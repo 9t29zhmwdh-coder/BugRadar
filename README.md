@@ -77,10 +77,10 @@ AI analysis is triggered automatically when an incident reaches **High severity*
 
 ```
 BugRadar/
-├── crates/br-core/      — Rust: collector, anomaly detection, AI, sysmon, DB
-├── crates/br-cli/       — CLI binary (bugradar)
-├── src-tauri/           — Tauri v2 backend + IPC commands
-└── frontend/            — React + TypeScript + Tailwind + Recharts
+├── crates/br-core/      # Rust: collector, anomaly detection, AI, sysmon, DB
+├── crates/br-cli/       # CLI binary (bugradar)
+├── src-tauri/           # Tauri v2 backend + IPC commands
+└── frontend/            # React + TypeScript + Tailwind + Recharts
 ```
 
 ### Data Flow
