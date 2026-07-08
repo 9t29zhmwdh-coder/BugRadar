@@ -1,11 +1,38 @@
-# Changelog — BugRadar
+# Changelog, BugRadar
 
 All notable changes to this project will be documented in this file.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## [0.1.0] — 2026-06-12
+## [0.1.1] - 2026-07-08
+
+### Fixed
+
+- App crashed on every launch: `#[tokio::main]` created a tokio runtime, then the
+  setup hook called `tauri::async_runtime::block_on()` from within it, which
+  panics ("Cannot start a runtime from within a runtime"). Changed `main()` to
+  a plain sync function, the standard Tauri v2 pattern
+- Missing `keyring`, `reqwest` and `sqlx` dependencies in `src-tauri/Cargo.toml`;
+  the app crate failed to compile at all. Promoted both to workspace dependencies
+  shared with `br-core`
+- Missing `src-tauri/capabilities/` permissions were blocking the event system
+- Icons referenced in `tauri.conf.json` did not exist in the repo
+- Duplicate "Watch Sources" heading rendered twice on the Settings page
+- CI excluded the `bugradar-app` crate from all checks, hiding all of the above
+- README claimed AI analysis auto-triggers on high-severity incidents; the
+  underlying `should_trigger_ai()` method exists but is not called anywhere.
+  Corrected to describe the actual manual trigger, noted as a ROADMAP item
+- README's AI Providers table listed "Ollama" twice and never mentioned Claude,
+  despite Claude being the default provider
+
+### Added
+
+- Full English/German UI translation (the app was previously English-only
+  with no language toggle)
+- README onboarding sections: how it runs, screenshot, in practice, uninstall/cleanup
+
+## [0.1.0] - 2026-06-12
 
 ### Added
 
