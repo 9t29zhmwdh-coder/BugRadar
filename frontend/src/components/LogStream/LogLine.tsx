@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import type { LogEntry } from "../../lib/tauri";
 import { levelColor, fmtDate } from "../../lib/format";
 import { StacktraceExpander } from "./StacktraceExpander";
+import { useT } from "../../lib/i18n";
 
 export function LogLine({ entry }: { entry: LogEntry }) {
   const [expanded, setExpanded] = useState(false);
   const hasStack = (entry.stacktrace?.length ?? 0) > 0;
+  const t = useT();
 
   return (
     <div className={`font-mono text-xs leading-relaxed py-0.5 px-2 hover:bg-slate-800/50 ${hasStack ? "cursor-pointer" : ""}`}
@@ -16,7 +18,7 @@ export function LogLine({ entry }: { entry: LogEntry }) {
       </span>
       <span className="text-slate-300">{entry.message}</span>
       {hasStack && (
-        <span className="ml-2 text-slate-600 text-xs">{expanded ? "▲" : "▼"} stack</span>
+        <span className="ml-2 text-slate-600 text-xs">{expanded ? "▲" : "▼"} {t("logStream.stack")}</span>
       )}
       {expanded && entry.stacktrace && (
         <StacktraceExpander lines={entry.stacktrace} />

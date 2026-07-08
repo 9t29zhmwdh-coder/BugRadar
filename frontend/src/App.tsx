@@ -10,17 +10,9 @@ import { useIncidentStore } from "./stores/incidentStore";
 import { useLogStore } from "./stores/logStore";
 import { useMetricsStore } from "./stores/metricsStore";
 import { useSettingsStore } from "./stores/settingsStore";
+import { useT, useLangStore } from "./lib/i18n";
 
 type View = "dashboard" | "logs" | "incidents" | "timeline" | "config" | "settings";
-
-const NAV: Array<{ id: View; label: string; icon: string }> = [
-  { id: "dashboard",  label: "Dashboard",  icon: "◈" },
-  { id: "logs",       label: "Logs",       icon: "≡" },
-  { id: "incidents",  label: "Incidents",  icon: "⚡" },
-  { id: "timeline",   label: "Timeline",   icon: "⌛" },
-  { id: "config",     label: "Config",     icon: "⚙" },
-  { id: "settings",   label: "Settings",   icon: "✦" },
-];
 
 export default function App() {
   const [view, setView] = useState<View>("dashboard");
@@ -28,6 +20,17 @@ export default function App() {
   const { loadSources } = useLogStore();
   const { startPolling, refreshContainers } = useMetricsStore();
   const { load: loadSettings } = useSettingsStore();
+  const t = useT();
+  const { lang, toggle } = useLangStore();
+
+  const NAV: Array<{ id: View; label: string; icon: string }> = [
+    { id: "dashboard",  label: t("nav.dashboard"),  icon: "◈" },
+    { id: "logs",       label: t("nav.logs"),       icon: "≡" },
+    { id: "incidents",  label: t("nav.incidents"),  icon: "⚡" },
+    { id: "timeline",   label: t("nav.timeline"),   icon: "⌛" },
+    { id: "config",     label: t("nav.config"),     icon: "⚙" },
+    { id: "settings",   label: t("nav.settings"),   icon: "✦" },
+  ];
 
   useEffect(() => {
     loadSettings();
@@ -57,6 +60,12 @@ export default function App() {
             {item.icon}
           </button>
         ))}
+        <button
+          onClick={toggle}
+          className="mt-auto w-10 h-8 rounded-lg flex items-center justify-center text-[10px] text-slate-500 hover:text-slate-300 hover:bg-slate-800 transition-colors border border-slate-800"
+        >
+          {lang === "en" ? "DE" : "EN"}
+        </button>
       </nav>
 
       {/* Main content */}

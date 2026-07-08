@@ -1,16 +1,18 @@
 import React from "react";
 import { useIncidentStore } from "../../stores/incidentStore";
 import { severityColor, statusBadge, timeAgo } from "../../lib/format";
+import { useT } from "../../lib/i18n";
 import type { Incident } from "../../lib/tauri";
 
 export function IncidentList() {
   const { incidents, selected, selectIncident, loading } = useIncidentStore();
+  const t = useT();
 
   return (
     <div className="h-full flex flex-col">
       <div className="p-3 border-b border-slate-700 flex items-center justify-between">
-        <div className="text-sm font-medium text-slate-300">Incidents</div>
-        <div className="text-xs text-slate-500">{incidents.length} total</div>
+        <div className="text-sm font-medium text-slate-300">{t("incidents.title")}</div>
+        <div className="text-xs text-slate-500">{incidents.length} {t("incidents.total")}</div>
       </div>
       <div className="flex-1 overflow-auto">
         {incidents.map(incident => (

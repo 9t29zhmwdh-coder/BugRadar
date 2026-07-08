@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useIncidentStore } from "../../stores/incidentStore";
 import { AiReportCard } from "./AiReportCard";
 import { severityColor, statusBadge, fmtDate, timeAgo } from "../../lib/format";
+import { useT } from "../../lib/i18n";
 import type { IncidentStatus } from "../../lib/tauri";
 
 const STATUSES: IncidentStatus[] = ["open", "investigating", "resolved", "suppressed"];
@@ -9,10 +10,11 @@ const STATUSES: IncidentStatus[] = ["open", "investigating", "resolved", "suppre
 export function IncidentDetail() {
   const { selected, reports, aiLoading, updateStatus, addNote, triggerAi } = useIncidentStore();
   const [note, setNote] = useState("");
+  const t = useT();
 
   if (!selected) return (
     <div className="flex items-center justify-center h-full text-slate-600 text-sm">
-      Select an incident to view details
+      {t("incidents.selectIncident")}
     </div>
   );
 
@@ -25,7 +27,7 @@ export function IncidentDetail() {
         <div>
           <h2 className="text-base font-semibold text-slate-100">{selected.title}</h2>
           <div className="text-xs text-slate-500 mt-1">
-            First seen {fmtDate(selected.first_seen)} · Last seen {timeAgo(selected.last_seen)}
+            {t("incidents.firstSeen")} {fmtDate(selected.first_seen)} · {t("incidents.lastSeen")} {timeAgo(selected.last_seen)}
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
@@ -36,7 +38,7 @@ export function IncidentDetail() {
       </div>
 
       <div className="flex items-center gap-2">
-        <span className="text-xs text-slate-500">Status:</span>
+        <span className="text-xs text-slate-500">{t("incidents.status")}</span>
         {STATUSES.map(s => (
           <button
             key={s}
@@ -53,8 +55,8 @@ export function IncidentDetail() {
       </div>
 
       <div className="text-xs text-slate-500">
-        {selected.anomaly_ids.length} anomalies · {selected.event_count} events ·
-        Sources: {selected.source_ids.join(", ")}
+        {selected.anomaly_ids.length} {t("incidents.anomalies")} · {selected.event_count} {t("incidents.events")} ·
+        {t("incidents.sources")} {selected.source_ids.join(", ")}
       </div>
 
       {/* AI Analysis */}
@@ -69,13 +71,13 @@ export function IncidentDetail() {
               className="flex items-center gap-2 px-3 py-1.5 bg-blue-700 hover:bg-blue-600 disabled:opacity-50 text-white text-sm rounded-lg transition-colors"
             >
               {isAiLoading ? (
-                <><span className="animate-spin">⟳</span> Analyzing...</>
+                <><span className="animate-spin">⟳</span> {t("incidents.analyzing")}</>
               ) : (
-                <><span>✦</span> Run AI Analysis</>
+                <><span>✦</span> {t("incidents.runAiAnalysis")}</>
               )}
             </button>
             <span className="text-xs text-slate-500">
-              Triggers Claude/Ollama root-cause analysis
+              {t("incidents.triggersInfo")}
             </span>
           </div>
         )}
@@ -84,7 +86,7 @@ export function IncidentDetail() {
       {/* Notes */}
       {selected.notes.length > 0 && (
         <div className="border-t border-slate-700 pt-4 space-y-2">
-          <div className="text-xs text-slate-500 uppercase tracking-widest">Notes</div>
+          <div className="text-xs text-slate-500 uppercase tracking-widest">{t("incidents.notes")}</div>
           {selected.notes.map(n => (
             <div key={n.id} className="bg-slate-800 rounded p-2 text-sm text-slate-300">
               <div className="text-xs text-slate-600 mb-1">{fmtDate(n.created_at)}</div>
@@ -99,7 +101,7 @@ export function IncidentDetail() {
           type="text"
           value={note}
           onChange={e => setNote(e.target.value)}
-          placeholder="Add a note..."
+          placeholder={t("incidents.addNotePlaceholder")}
           className="flex-1 bg-slate-800 border border-slate-600 rounded px-3 py-1.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-slate-400"
           onKeyDown={e => { if (e.key === "Enter" && note.trim()) { addNote(selected.id, note); setNote(""); } }}
         />
@@ -107,7 +109,7 @@ export function IncidentDetail() {
           onClick={() => { if (note.trim()) { addNote(selected.id, note); setNote(""); } }}
           className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-sm text-slate-200 rounded transition-colors"
         >
-          Add
+          {t("incidents.add")}
         </button>
       </div>
     </div>
