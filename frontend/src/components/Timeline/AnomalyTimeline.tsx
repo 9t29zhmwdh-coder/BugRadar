@@ -4,9 +4,11 @@ import {
 } from "recharts";
 import { useMetricsStore } from "../../stores/metricsStore";
 import { format } from "date-fns";
+import { useT } from "../../lib/i18n";
 
 export function AnomalyTimeline() {
   const { history } = useMetricsStore();
+  const t = useT();
 
   const data = history.map(m => ({
     time: format(new Date(m.collected_at), "HH:mm:ss"),
@@ -16,10 +18,10 @@ export function AnomalyTimeline() {
 
   return (
     <div className="h-full p-4">
-      <div className="text-xs text-slate-500 uppercase tracking-widest mb-4">System Timeline</div>
+      <div className="text-xs text-slate-500 uppercase tracking-widest mb-4">{t("timeline.systemTimeline")}</div>
       {data.length < 2 ? (
         <div className="flex items-center justify-center h-32 text-slate-600 text-sm">
-          Collecting data...
+          {t("timeline.collectingData")}
         </div>
       ) : (
         <ResponsiveContainer width="100%" height={160}>

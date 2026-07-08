@@ -1,11 +1,11 @@
-use tauri::{State, AppHandle};
+use tauri::State;
 use br_core::models::log_entry::{WatchSource, LogEntry};
 use br_core::db::queries;
 
 use crate::{error::BrResult, state::AppState};
 
 #[tauri::command]
-pub async fn watch_source(source: WatchSource, app: AppHandle, state: State<'_, AppState>) -> BrResult<String> {
+pub async fn watch_source(source: WatchSource, state: State<'_, AppState>) -> BrResult<String> {
     let source_id = source.id.clone();
 
     queries::upsert_watch_source(&state.db.pool, &source).await?;

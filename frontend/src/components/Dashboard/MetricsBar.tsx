@@ -1,12 +1,14 @@
 import React from "react";
 import { useMetricsStore } from "../../stores/metricsStore";
+import { useT } from "../../lib/i18n";
 
 export function MetricsBar() {
   const { metrics } = useMetricsStore();
+  const t = useT();
 
   if (!metrics) return (
     <div className="h-12 bg-slate-900 border-b border-slate-700 flex items-center px-4 text-slate-500 text-sm">
-      Collecting metrics...
+      {t("dashboard.collectingMetrics")}
     </div>
   );
 

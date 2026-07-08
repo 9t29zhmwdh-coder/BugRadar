@@ -16,8 +16,7 @@ fn app_data_dir(app: &AppHandle) -> PathBuf {
     app.path().app_data_dir().unwrap_or_else(|_| PathBuf::from("."))
 }
 
-#[tokio::main]
-async fn main() {
+fn main() {
     tracing_subscriber::fmt::init();
 
     tauri::Builder::default()
@@ -27,7 +26,7 @@ async fn main() {
 
             tauri::async_runtime::block_on(async move {
                 let db = Database::open(&db_path).await.expect("Failed to open database");
-                let mut state = AppState::new(db);
+                let state = AppState::new(db);
 
                 // Wire up log collector → anomaly engine
                 let log_rx = {

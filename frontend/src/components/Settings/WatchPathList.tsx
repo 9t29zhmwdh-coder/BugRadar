@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useLogStore } from "../../stores/logStore";
 import { WatchSource } from "../../lib/tauri";
 import { v4 as uuidv4 } from "../../lib/uuid";
+import { useT } from "../../lib/i18n";
 
 export function WatchPathList() {
   const { sources, addSource, removeSource } = useLogStore();
   const [newPath, setNewPath] = useState("");
   const [label, setLabel] = useState("");
+  const t = useT();
 
   const add = async () => {
     if (!newPath.trim()) return;
@@ -25,8 +27,6 @@ export function WatchPathList() {
 
   return (
     <div className="space-y-3">
-      <div className="text-xs text-slate-500 uppercase tracking-widest">Watch Sources</div>
-
       <div className="space-y-1.5">
         {sources.map(s => (
           <div key={s.id} className="flex items-center justify-between bg-slate-800 rounded px-3 py-2">
@@ -40,7 +40,7 @@ export function WatchPathList() {
               onClick={() => removeSource(s.id)}
               className="text-slate-600 hover:text-red-400 text-xs transition-colors"
             >
-              Remove
+              {t("settings.remove")}
             </button>
           </div>
         ))}
@@ -51,7 +51,7 @@ export function WatchPathList() {
           type="text"
           value={label}
           onChange={e => setLabel(e.target.value)}
-          placeholder="Label (optional)"
+          placeholder={t("settings.labelOptional")}
           className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-slate-500"
         />
         <div className="flex gap-2">
@@ -67,7 +67,7 @@ export function WatchPathList() {
             onClick={add}
             className="px-3 py-1.5 bg-blue-700 hover:bg-blue-600 text-sm text-white rounded transition-colors"
           >
-            Watch
+            {t("settings.watch")}
           </button>
         </div>
       </div>

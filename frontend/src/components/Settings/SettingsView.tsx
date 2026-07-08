@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { WatchPathList } from "./WatchPathList";
+import { useT } from "../../lib/i18n";
 import type { AppSettings } from "../../lib/tauri";
 
 export function SettingsView() {
@@ -8,6 +9,7 @@ export function SettingsView() {
   const [form, setForm] = useState<AppSettings | null>(null);
   const [apiKeyInput, setApiKeyInput] = useState("");
   const [saved, setSaved] = useState(false);
+  const t = useT();
 
   useEffect(() => { if (settings) setForm(settings); }, [settings]);
 
@@ -24,16 +26,16 @@ export function SettingsView() {
     setApiKeyInput("");
   };
 
-  if (!form) return <div className="p-4 text-slate-500 text-sm">Loading...</div>;
+  if (!form) return <div className="p-4 text-slate-500 text-sm">{t("settings.loading")}</div>;
 
   return (
     <div className="p-4 space-y-6 max-w-lg">
-      <div className="text-xs text-slate-500 uppercase tracking-widest">Settings</div>
+      <div className="text-xs text-slate-500 uppercase tracking-widest">{t("settings.title")}</div>
 
-      <Section title="AI Provider">
+      <Section title={t("settings.aiProvider")}>
         <div className="space-y-3">
           <div>
-            <label className="text-xs text-slate-400 block mb-1">Provider</label>
+            <label className="text-xs text-slate-400 block mb-1">{t("settings.provider")}</label>
             <select
               value={form.ai_provider}
               onChange={e => setForm({ ...form, ai_provider: e.target.value })}
@@ -47,7 +49,7 @@ export function SettingsView() {
           {form.ai_provider === "claude" && (
             <div>
               <label className="text-xs text-slate-400 block mb-1">
-                API Key {hasApiKey ? "✓ saved" : "(not set)"}
+                {t("settings.apiKey")} {hasApiKey ? `✓ ${t("settings.saved")}` : `(${t("settings.notSet")})`}
               </label>
               <div className="flex gap-2">
                 <input
@@ -58,7 +60,7 @@ export function SettingsView() {
                   className="flex-1 bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none font-mono"
                 />
                 <button onClick={handleSaveKey} className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-sm text-slate-200 rounded">
-                  Save
+                  {t("settings.save")}
                 </button>
               </div>
             </div>
@@ -67,7 +69,7 @@ export function SettingsView() {
           {form.ai_provider === "ollama" && (
             <div className="space-y-2">
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Ollama Host</label>
+                <label className="text-xs text-slate-400 block mb-1">{t("settings.ollamaHost")}</label>
                 <input
                   type="text"
                   value={form.ollama_host}
@@ -76,7 +78,7 @@ export function SettingsView() {
                 />
               </div>
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Model</label>
+                <label className="text-xs text-slate-400 block mb-1">{t("settings.model")}</label>
                 <input
                   type="text"
                   value={form.ollama_model}
@@ -89,21 +91,21 @@ export function SettingsView() {
         </div>
       </Section>
 
-      <Section title="Anomaly Thresholds">
+      <Section title={t("settings.anomalyThresholds")}>
         <div className="space-y-2">
-          <Slider label="Error Spike Threshold" value={form.anomaly_config.error_spike_threshold}
+          <Slider label={t("settings.errorSpikeThreshold")} value={form.anomaly_config.error_spike_threshold}
             min={1} max={10} step={0.5}
             onChange={v => setForm({ ...form, anomaly_config: { ...form.anomaly_config, error_spike_threshold: v } })} />
-          <Slider label="Latency Jump Threshold" value={form.anomaly_config.latency_jump_threshold}
+          <Slider label={t("settings.latencyJumpThreshold")} value={form.anomaly_config.latency_jump_threshold}
             min={1} max={10} step={0.5}
             onChange={v => setForm({ ...form, anomaly_config: { ...form.anomaly_config, latency_jump_threshold: v } })} />
-          <Slider label="Window (seconds)" value={form.anomaly_config.window_seconds}
+          <Slider label={t("settings.windowSeconds")} value={form.anomaly_config.window_seconds}
             min={60} max={3600} step={60}
             onChange={v => setForm({ ...form, anomaly_config: { ...form.anomaly_config, window_seconds: v } })} />
         </div>
       </Section>
 
-      <Section title="Watch Sources">
+      <Section title={t("settings.watchSources")}>
         <WatchPathList />
       </Section>
 
@@ -111,7 +113,7 @@ export function SettingsView() {
         onClick={handleSave}
         className="px-4 py-1.5 bg-blue-700 hover:bg-blue-600 text-sm text-white rounded transition-colors"
       >
-        {saved ? "Saved ✓" : "Save Settings"}
+        {saved ? `${t("settings.savedCheck")} ✓` : t("settings.saveSettings")}
       </button>
     </div>
   );
