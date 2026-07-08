@@ -1,6 +1,6 @@
-# BugRadar — Roadmap
+# BugRadar Roadmap
 
-## v0.1.0 — Initial Release ✅ (2026-06-12)
+## v0.1.0, Initial Release ✅ (2026-06-12)
 
 - Real-time log file monitoring via `notify`
 - Docker container log streaming via `bollard`
@@ -14,8 +14,11 @@
 
 ---
 
-## v0.2.0 — Detector Expansion (planned)
+## v0.2.0, Detector Expansion (planned)
 
+- [ ] Wire up `Incident::should_trigger_ai()` to the collector so AI analysis
+      actually auto-triggers on High-severity incidents with 3+ anomalies
+      (the method exists but nothing calls it yet)
 - [ ] Log level trend detector (warn→error escalation)
 - [ ] Pattern-based detector (regex rules, user-defined)
 - [ ] Docker health-check failure detector
@@ -25,7 +28,7 @@
 
 ---
 
-## v0.3.0 — Integrations & Notifications (planned)
+## v0.3.0, Integrations & Notifications (planned)
 
 - [ ] Desktop notifications (OS-native) on new incidents
 - [ ] Webhook output (POST to user-defined endpoint)
@@ -36,7 +39,7 @@
 
 ---
 
-## v1.0.0 — Stable Release (planned)
+## v1.0.0, Stable Release (planned)
 
 - [ ] Full test coverage for br-core (unit + integration)
 - [ ] Signed macOS / Windows / Linux binaries

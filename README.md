@@ -11,9 +11,17 @@
 
 BugRadar watches your log files, Docker containers, and system metrics in real-time, automatically detects anomalies, groups them into incidents, and generates AI-driven root-cause analyses with actionable fix suggestions.
 
-[![CI](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/actions) ![Platform](https://img.shields.io/badge/Platform-macOS_%7C_Windows-lightgrey) ![Rust](https://img.shields.io/badge/Rust-CE422B?logo=rust&logoColor=white) ![Tauri](https://img.shields.io/badge/Tauri-24C8D8?logo=tauri&logoColor=white) ![AI | Claude Code](https://img.shields.io/badge/AI-Claude_Code-black?logo=anthropic&logoColor=white) ![AI | Copilot](https://img.shields.io/badge/AI-Copilot-black?logo=github&logoColor=white) ![AI | Ollama](https://img.shields.io/badge/AI-Ollama-black?logo=ollama&logoColor=white)
+[![CI](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/actions) ![Platform](https://img.shields.io/badge/Platform-macOS_%7C_Windows-lightgrey) ![Rust](https://img.shields.io/badge/Rust-CE422B?logo=rust&logoColor=white) ![Tauri](https://img.shields.io/badge/Tauri-24C8D8?logo=tauri&logoColor=white) ![AI | Claude Code](https://img.shields.io/badge/AI-Claude_Code-black?logo=anthropic&logoColor=white) ![AI | Copilot](https://img.shields.io/badge/AI-Copilot-black?logo=github&logoColor=white) ![AI | Claude](https://img.shields.io/badge/AI-Claude-black?logo=anthropic&logoColor=white) ![AI | Ollama](https://img.shields.io/badge/AI-Ollama-black?logo=ollama&logoColor=white)
+
+> **How it runs:** BugRadar is a native desktop app, not a server or browser tool. It opens as its own window and has no tray icon or background service; it only watches sources and collects metrics while the window is open.
+
+![BugRadar](docs/screenshot.png)
 
 ---
+
+BugRadar's UI is available in English (default) and German; switch anytime with the language toggle in the bottom-left corner.
+
+**In practice:** you point BugRadar at a log file or Docker container, it flags anomalies (error spikes, latency jumps) as they happen, groups related ones into a single incident, and on request asks Claude or a local Ollama model to explain the root cause with concrete fix suggestions.
 
 ## Features
 
@@ -23,7 +31,7 @@ BugRadar watches your log files, Docker containers, and system metrics in real-t
 | **Multi-Format Parsing** | JSON, plaintext, nginx, Docker: with stacktrace merging |
 | **Anomaly Detection** | Rolling-window analysis: error spikes, latency jumps, memory leaks |
 | **Incident Grouping** | Correlates anomalies into incidents within configurable time windows |
-| **AI Root-Cause Analysis** | Local AI (Ollama) generates structured fix suggestions |
+| **AI Root-Cause Analysis** | Claude (Anthropic API, default) or a local Ollama model generates structured fix suggestions |
 | **System Monitoring** | CPU, RAM, Disk, Network, Docker container status |
 | **Config Inspector** | Analyzes YAML/JSON/TOML files for issues and conflicts |
 | **Timeline View** | Recharts-powered anomaly timeline and heatmap |
@@ -35,7 +43,7 @@ BugRadar watches your log files, Docker containers, and system metrics in real-t
 - [Rust](https://rustup.rs/) 1.77+
 - [Node.js](https://nodejs.org/) 20+
 - [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
-- [Ollama](https://ollama.ai) (for AI analysis)
+- An [Anthropic API key](https://console.anthropic.com/) (default AI provider) or [Ollama](https://ollama.ai) running locally
 - macOS / Windows / Linux
 
 ---
@@ -62,14 +70,24 @@ bugradar incidents --open
 
 ---
 
+## Uninstall / Cleanup
+
+- Delete the app bundle
+- Remove the local database: platform-specific app data directory (`bugradar.sqlite`), resolved via Tauri's `app_data_dir`
+- Remove the stored API key from Keychain Access.app (search for "BugRadar")
+
+No other files or background services are left behind.
+
+---
+
 ## AI Providers
 
 | Provider | Setup |
 |---|---|
-| **Ollama** | Set URL in Settings (default: `http://localhost:11434`) |
-| **Ollama (local)** | Install [Ollama](https://ollama.ai), run `ollama pull llama3.2` |
+| **Claude (Anthropic)** | Default. Add your API key in Settings; stored in the OS keychain |
+| **Ollama (local)** | Install [Ollama](https://ollama.ai), run `ollama pull llama3.2`, set the host/model in Settings |
 
-AI analysis is triggered automatically when an incident reaches **High severity** with at least **3 anomalies** (30s debounce to avoid API spam).
+AI analysis runs on demand: click "Run AI Analysis" on any incident. (Auto-triggering for High-severity incidents with 3+ anomalies is implemented in `Incident::should_trigger_ai()` but not wired up to the collector yet, see ROADMAP.md.)
 
 ---
 
