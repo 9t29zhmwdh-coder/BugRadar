@@ -46,6 +46,8 @@ BugRadar's UI is available in English (default) and German; switch anytime with 
 - An [Anthropic API key](https://console.anthropic.com/) (default AI provider) or [Ollama](https://ollama.ai) running locally
 - macOS / Windows / Linux
 
+> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
+
 ---
 
 ## Quick Start
