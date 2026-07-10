@@ -19,6 +19,10 @@ BugRadar watches your log files, Docker containers, and system metrics in real-t
 
 ---
 
+> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
+
+---
+
 BugRadar's UI is available in English (default) and German; switch anytime with the language toggle in the bottom-left corner.
 
 **In practice:** you point BugRadar at a log file or Docker container, it flags anomalies (error spikes, latency jumps) as they happen, groups related ones into a single incident, and on request asks Claude or a local Ollama model to explain the root cause with concrete fix suggestions.
@@ -45,8 +49,6 @@ BugRadar's UI is available in English (default) and German; switch anytime with 
 - [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
 - An [Anthropic API key](https://console.anthropic.com/) (default AI provider) or [Ollama](https://ollama.ai) running locally
 - macOS / Windows / Linux
-
-> 🌱 New here? → [Step-by-step guide for beginners](GETTING_STARTED.md)
 
 ---
 
