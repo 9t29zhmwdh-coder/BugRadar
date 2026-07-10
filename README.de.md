@@ -18,6 +18,10 @@ BugRadar überwacht Logdateien, Docker-Container und Systemmetriken in Echtzeit,
 
 ---
 
+> 🌱 Neu hier? → [Schritt-für-Schritt-Anleitung für Einsteiger](GETTING_STARTED.md)
+
+---
+
 Die Oberfläche von BugRadar ist auf Englisch (Standard) und Deutsch verfügbar; umschaltbar über den Sprachtoggle unten links.
 
 **In der Praxis:** du zeigst BugRadar auf eine Logdatei oder einen Docker-Container, es markiert Anomalien (Fehler-Spikes, Latenz-Sprünge) sobald sie auftreten, gruppiert zusammengehörige zu einem Incident und lässt auf Wunsch Claude oder ein lokales Ollama-Modell die Ursache mit konkreten Lösungsvorschlägen erklären.
