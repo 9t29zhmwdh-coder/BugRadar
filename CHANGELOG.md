@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.5] - 2026-07-11
+
+### Fixed
+
+- Removed an eszett and em-dashes from TEMPLATE_NOTES.md; the project uses Swiss German orthography.
+
 ## [0.2.4] - 2026-07-11
 
 ### Fixed
