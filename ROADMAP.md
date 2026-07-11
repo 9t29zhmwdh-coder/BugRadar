@@ -47,3 +47,15 @@
 - [ ] Comprehensive user documentation
 - [ ] Accessibility audit (WCAG 2.1 AA)
 - [ ] Performance: handle 100k log lines/s without UI stutter
+
+---
+
+## Dual-Licensing Readiness
+
+Assessed 2026-07-11 as a Dual-Licensing candidate (Community MIT + Commercial/Enterprise tier), with an important caveat: observability/incident-management is an established commercial category (Datadog, Sentry, PagerDuty), but BugRadar is deliberately local-first and privacy-first (no cloud calls, no telemetry, RAM-only processing). A conventional multi-tenant SaaS Enterprise tier would conflict with that identity. Not ready yet; blocked on:
+
+- [ ] No multi-machine or team aggregation story at all, by design: a Commercial tier here would need to stay a licensed fleet-dashboard companion (still local/on-prem) rather than a hosted rewrite
+- [ ] No plugin API for custom detectors yet (only the built-in Docker and nginx plugins, v0.3.0 item above): the most natural Community/Commercial split would be "core engine free, paid detector packs"
+- [ ] Webhook and notification integrations are still only roadmap entries (v0.3.0), nothing to gate yet
+
+Once the plugin API (v0.3.0) lands, revisit: candidate Enterprise-only features would be paid detector packs distributed through the plugin registry and a licensed fleet-dashboard companion for aggregating multiple local BugRadar instances, with the core collector/anomaly/incident engine and desktop app staying Community/MIT.

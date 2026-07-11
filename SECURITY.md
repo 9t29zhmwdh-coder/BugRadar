@@ -1,4 +1,4 @@
-# Security Policy — BugRadar
+# Security Policy: BugRadar
 
 ## Supported Versions
 
