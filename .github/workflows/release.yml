@@ -59,3 +59,33 @@ jobs:
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
+
+      - name: Upload stable-named DMG (for README download link)
+        if: matrix.platform == 'macos-latest'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dmg=$(find target/release/bundle/dmg -name "*.dmg" | head -1)
+          cp "$dmg" BugRadar.dmg
+          gh release upload "${{ github.ref_name }}" BugRadar.dmg --clobber --repo ${{ github.repository }}
+
+      - name: Upload stable-named installer (for README download link)
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $exe = Get-ChildItem -Path "target/release/bundle/nsis" -Filter "*.exe" | Select-Object -First 1
+          Copy-Item $exe.FullName "BugRadar-Setup.exe"
+          gh release upload "${{ github.ref_name }}" "BugRadar-Setup.exe" --clobber --repo ${{ github.repository }}
+
+      - name: Upload stable-named AppImage (for README download link)
+        if: matrix.platform == 'ubuntu-latest'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          appimage=$(find target/release/bundle/appimage -name "*.AppImage" | head -1)
+          cp "$appimage" BugRadar.AppImage
+          gh release upload "${{ github.ref_name }}" BugRadar.AppImage --clobber --repo ${{ github.repository }}
