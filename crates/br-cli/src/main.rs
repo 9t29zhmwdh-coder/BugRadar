@@ -69,7 +69,7 @@ async fn main() -> anyhow::Result<()> {
                 println!("No issues found.");
             } else {
                 for issue in &result.issues {
-                    println!("[{}] {} — {}", issue.severity.to_uppercase(), issue.key, issue.message);
+                    println!("[{}] {} - {}", issue.severity.to_uppercase(), issue.key, issue.message);
                     if let Some(ref suggestion) = issue.suggestion {
                         println!("  → {}", suggestion);
                     }

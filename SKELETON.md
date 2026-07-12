@@ -1,4 +1,4 @@
-# BugRadar — Repository Skeleton
+# BugRadar: Repository Skeleton
 
 **Repo:** `9t29zhmwdh-coder/BugRadar`
 **Stack:** Rust workspace · Tauri v2 · React/TypeScript · SQLite
@@ -58,4 +58,4 @@ BugRadar/
 ## Notes
 
 - CI/CD workflows are not included in this skeleton (GitHub Actions requires secrets setup).
-- Tauri v2 capabilities are defined in `src-tauri/capabilities/` — IPC commands must be explicitly allowlisted there.
+- Tauri v2 capabilities are defined in `src-tauri/capabilities/`: IPC commands must be explicitly allowlisted there.

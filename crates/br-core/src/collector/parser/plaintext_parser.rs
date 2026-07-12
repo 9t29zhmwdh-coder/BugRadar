@@ -88,7 +88,7 @@ impl LogParserPlugin for PlaintextParser {
             return None;
         }
 
-        // New entry — finalize any pending one first
+        // New entry: finalize any pending one first
         let finished = self.finalize_pending();
 
         let timestamp = self.parse_timestamp(line).unwrap_or_else(Utc::now);

@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.7] - 2026-07-12
+
+### Fixed
+
+- Removed 20 em-dashes across `GETTING_STARTED.md`, `CONTRIBUTING.md`, `SKELETON.md`, `ARCHITECTURE.md`, three Rust source comments, one CLI output string (`crates/br-cli/src/main.rs`), and one TypeScript comment. Swiss German orthography rule: no em-dash/en-dash anywhere in the repo.
+
 ## [0.2.6] - 2026-07-12
 
 ### Added

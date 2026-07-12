@@ -1,4 +1,4 @@
-# BugRadar — Architecture
+# BugRadar: Architecture
 
 ## Overview
 
@@ -10,8 +10,8 @@ BugRadar is a Rust/Tauri v2 desktop application for real-time diagnostics and mo
 
 ```
 src-tauri/
-├── br-core/          # Library crate — all business logic
-└── br-cli/           # Binary crate — Tauri shell + CLI entry point
+├── br-core/          # Library crate: all business logic
+└── br-cli/           # Binary crate: Tauri shell + CLI entry point
 ```
 
 ### br-core
@@ -72,10 +72,10 @@ LogCollector (file/docker)
 React/TypeScript SPA served by Tauri v2. Communicates with the Rust backend exclusively via `invoke()` IPC calls. No HTTP server is exposed.
 
 Key views:
-- **Dashboard** — live metric graphs + incident feed
-- **Incidents** — grouped anomaly timeline with AI analysis panel
-- **Sources** — configure watched log files and Docker targets
-- **Settings** — Ollama model selection, thresholds, retention policy
+- **Dashboard**: live metric graphs + incident feed
+- **Incidents**: grouped anomaly timeline with AI analysis panel
+- **Sources**: configure watched log files and Docker targets
+- **Settings**: Ollama model selection, thresholds, retention policy
 
 ---
 

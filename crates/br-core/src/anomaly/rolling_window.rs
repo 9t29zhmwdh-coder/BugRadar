@@ -1,4 +1,4 @@
-// Re-export from models — the generic RollingWindow lives in models/anomaly.rs
+// Re-export from models: the generic RollingWindow lives in models/anomaly.rs
 // This module provides source-level rolling windows per source_id
 use chrono::Duration;
 use dashmap::DashMap;
