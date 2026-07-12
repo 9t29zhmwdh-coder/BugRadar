@@ -5,6 +5,20 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.6] - 2026-07-12
+
+### Added
+
+- Release workflow (`release.yml`) producing installable cross-platform artifacts (dmg, exe, msi, deb, rpm, AppImage) on every `v*` tag push, using the portfolio's established `tauri-apps/tauri-action` pattern.
+- README download section (macOS DMG, Windows installer, Linux AppImage links) in both English and German.
+
+### Fixed
+
+- Pinned all GitHub Actions in `ci.yml` to a commit SHA instead of a mutable tag, per the portfolio's supply-chain integrity standard.
+- Removed an unscoped `[build]` rustflag (`-C target-cpu=native`) from `.cargo/config.toml`. This forced every compilation, including release builds on shared CI runners, to target the exact CPU of the build machine, which can crash with an illegal instruction on end-user hardware with a different instruction set.
+- Bumped `vite`/`@vitejs/plugin-react` to major versions 8/6 to resolve a moderate/high-severity esbuild dev-server request-forwarding vulnerability (npm audit).
+- Switched the frontend's forced `esbuild` minifier to Vite's default minifier; the explicit `esbuild` setting was incompatible with Vite 8's destructuring lowering for the configured multi-target build list.
+
 ## [0.2.5] - 2026-07-11
 
 ### Fixed

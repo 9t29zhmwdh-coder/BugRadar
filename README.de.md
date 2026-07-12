@@ -18,6 +18,10 @@ BugRadar überwacht Logdateien, Docker-Container und Systemmetriken in Echtzeit,
 
 ---
 
+> 💾 **Download:** [macOS (DMG)](https://github.com/9t29zhmwdh-coder/BugRadar/releases/latest/download/BugRadar.dmg) · [Windows (Installer)](https://github.com/9t29zhmwdh-coder/BugRadar/releases/latest/download/BugRadar-Setup.exe) · [Linux (AppImage)](https://github.com/9t29zhmwdh-coder/BugRadar/releases/latest/download/BugRadar.AppImage): immer die neueste Version, nicht codesigniert/notarisiert (Gatekeeper/SmartScreen warnen beim ersten Start). Oder aus dem Quellcode bauen, siehe Getting Started unten.
+
+---
+
 > 🌱 Neu hier? → [Schritt-für-Schritt-Anleitung für Einsteiger](GETTING_STARTED.md)
 
 ---
