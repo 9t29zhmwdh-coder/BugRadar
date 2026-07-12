@@ -87,7 +87,7 @@ If you see `command not found` for any of these, install the missing piece:
 - **Node.js**: install via [nodejs.org](https://nodejs.org) or your distro's package manager
 - **Tauri CLI**: `cargo install tauri-cli`
 
-Tauri apps on Linux also need WebKitGTK and a few system libraries — see Troubleshooting below if the build fails with missing package errors.
+Tauri apps on Linux also need WebKitGTK and a few system libraries; see Troubleshooting below if the build fails with missing package errors.
 
 ### 3. Get the code
 
@@ -187,7 +187,7 @@ BugRadar can explain incidents using AI, but this is opt-in:
 - **Claude (default)**: get an [Anthropic API key](https://console.anthropic.com/) and add it in **Settings**; it is stored in your OS keychain
 - **Ollama (local, private)**: install [Ollama](https://ollama.ai), run `ollama pull llama3.2`, then set the host/model in **Settings**
 
-Click "Run AI Analysis" on any incident to trigger it — it does not run automatically.
+Click "Run AI Analysis" on any incident to trigger it. It does not run automatically.
 
 ---
 

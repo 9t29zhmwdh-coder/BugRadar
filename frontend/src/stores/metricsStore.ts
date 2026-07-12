@@ -34,7 +34,7 @@ export const useMetricsStore = create<MetricsState>((set) => ({
       const containers = await api.getContainerStatuses();
       set({ containers });
     } catch {
-      // Docker not available — ignore
+      // Docker not available: ignore
     }
   },
 }));
