@@ -42,6 +42,7 @@ Die Oberfläche von BugRadar ist auf Englisch (Standard) und Deutsch verfügbar;
 | **System-Monitoring** | CPU, RAM, Disk, Netzwerk, Docker-Container-Status |
 | **Config-Inspector** | Analysiert YAML/JSON/TOML-Dateien auf Fehler und Konflikte |
 | **Timeline-Ansicht** | Recharts-basierte Anomalie-Timeline und Heatmap |
+| **Eigene Detektoren** | Eigene ausführbare Datei als Detektor einbinden, in jeder Sprache: Einstellungen → Eigene Detektoren |
 
 ---
 
@@ -95,6 +96,52 @@ Es bleiben keine weiteren Dateien oder Hintergrunddienste zurück.
 | **Ollama (lokal)** | [Ollama](https://ollama.ai) installieren, `ollama pull llama3.2` ausführen, Host/Modell in den Einstellungen setzen |
 
 Die KI-Analyse läuft auf Anfrage: Klick auf "KI-Analyse starten" bei einem Incident. (Automatisches Auslösen bei High-Severity-Incidents mit 3+ Anomalien ist in `Incident::should_trigger_ai()` implementiert, aber noch nicht an den Collector angebunden, siehe ROADMAP.md.)
+
+---
+
+## Eigene Detektoren
+
+Neben den eingebauten Detektoren (Fehler-Spitze, Latenz-Sprung, Memory Leak) kann BugRadar eine eigene ausführbare Datei als Detektor ausführen, in jeder Sprache. Einrichtung unter Einstellungen → Eigene Detektoren: ein Befehl, optionale Argumente und ein Timeout.
+
+Einmal pro Tick, für jede aktive Log-Quelle, startet BugRadar den konfigurierten Befehl als frischen Subprozess, schreibt eine JSON-Zeile mit dem aktuellen Fenster-Zustand der Quelle auf dessen stdin und liest eine JSON-Zeile mit Anomalien von dessen stdout zurück:
+
+```json
+// stdin (BugRadar → Plugin)
+{
+  "source_id": "app-1",
+  "total_entries": 812,
+  "error_count_last_tick": 3,
+  "warn_count_in_window": 5,
+  "error_rate_mean": 1.2,
+  "latency_samples_ms": [42.1, 58.0],
+  "recent_messages": ["disk full: /var", "..."]
+}
+```
+
+```json
+// stdout (Plugin → BugRadar)
+{
+  "anomalies": [
+    { "label": "disk full", "value": 9.0, "baseline": 1.0, "contributing_entries": ["disk full: /var"] }
+  ]
+}
+```
+
+Ein minimales Python-Beispiel (jede ausführbare Datei funktioniert, dies ist nur das portabelste zum Copy-Paste):
+
+```python
+#!/usr/bin/env python3
+import json, sys
+
+request = json.load(sys.stdin)
+anomalies = []
+if any("disk full" in m for m in request["recent_messages"]):
+    anomalies.append({"label": "disk full", "value": 1.0, "baseline": 0.0,
+                       "contributing_entries": request["recent_messages"]})
+json.dump({"anomalies": anomalies}, sys.stdout)
+```
+
+Das läuft als Subprozess, nicht als dynamisch geladene Bibliothek: Rust garantiert keine ABI-Stabilität über Compiler-Versionen hinweg, ein per `dlopen` geladenes Plugin, das mit einem anderen rustc als BugRadar selbst kompiliert wurde, wäre Undefined Behavior, das nur auf seinen Auftritt wartet. Eine Prozessgrenze vermeidet das vollständig und erlaubt einen Detektor in jeder Sprache, auf Kosten eines kleinen Spawn-Overheads pro Tick. Ein fehlerhaftes Plugin (Absturz, ungültiges JSON, Timeout) lässt nur dessen Befunde für diesen Tick wegfallen; es betrifft nie die eingebauten Detektoren oder andere Quellen.
 
 ---
 

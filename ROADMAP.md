@@ -28,14 +28,17 @@
 
 ---
 
-## v0.3.0, Integrations & Notifications (planned)
+## v0.3.0, Plugin API (current)
+
+- [x] Plugin API for custom detectors: a process boundary (JSON over stdin/stdout, once per tick per source) rather than a dynamically loaded `.so`/`.dll`, since Rust gives no ABI stability guarantee across compiler versions and a `dlopen`'d plugin built with a different rustc than BugRadar itself would be undefined behavior. Configurable in Settings → Custom Detectors. See README.md.
+
+## v0.4.0, Integrations & Notifications (planned)
 
 - [ ] Desktop notifications (OS-native) on new incidents
 - [ ] Webhook output (POST to user-defined endpoint)
 - [ ] Multi-source correlation (link incidents across files + containers)
 - [ ] Configurable retention policy (TTL per source)
 - [ ] Dark / light theme toggle
-- [ ] Plugin API for custom detectors (Rust trait, dynamically loaded)
 
 ---
 
@@ -55,7 +58,7 @@
 Assessed 2026-07-11 as a Dual-Licensing candidate (Community MIT + Commercial/Enterprise tier), with an important caveat: observability/incident-management is an established commercial category (Datadog, Sentry, PagerDuty), but BugRadar is deliberately local-first and privacy-first (no cloud calls, no telemetry, RAM-only processing). A conventional multi-tenant SaaS Enterprise tier would conflict with that identity. Not ready yet; blocked on:
 
 - [ ] No multi-machine or team aggregation story at all, by design: a Commercial tier here would need to stay a licensed fleet-dashboard companion (still local/on-prem) rather than a hosted rewrite
-- [ ] No plugin API for custom detectors yet (only the built-in Docker and nginx plugins, v0.3.0 item above): the most natural Community/Commercial split would be "core engine free, paid detector packs"
-- [ ] Webhook and notification integrations are still only roadmap entries (v0.3.0), nothing to gate yet
+- [x] ~~No plugin API for custom detectors yet~~ Shipped in v0.3.0 (see above): the most natural Community/Commercial split would be "core engine free, paid detector packs"
+- [ ] Webhook and notification integrations are still only roadmap entries (v0.4.0), nothing to gate yet
 
-Once the plugin API (v0.3.0) lands, revisit: candidate Enterprise-only features would be paid detector packs distributed through the plugin registry and a licensed fleet-dashboard companion for aggregating multiple local BugRadar instances, with the core collector/anomaly/incident engine and desktop app staying Community/MIT.
+Once the plugin API (v0.3.0) landed, revisit: candidate Enterprise-only features would be paid detector packs distributed through a plugin registry and a licensed fleet-dashboard companion for aggregating multiple local BugRadar instances, with the core collector/anomaly/incident engine, the plugin API itself, and the desktop app staying Community/MIT.

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSettingsStore } from "../../stores/settingsStore";
 import { WatchPathList } from "./WatchPathList";
 import { useT } from "../../lib/i18n";
-import type { AppSettings } from "../../lib/tauri";
+import type { AppSettings, PluginDetectorConfig } from "../../lib/tauri";
 
 export function SettingsView() {
   const { settings, hasApiKey, load, save, saveApiKey } = useSettingsStore();
@@ -109,6 +109,10 @@ export function SettingsView() {
         <WatchPathList />
       </Section>
 
+      <Section title={t("settings.customDetectors")}>
+        <CustomDetectorList form={form} setForm={setForm} />
+      </Section>
+
       <button
         onClick={handleSave}
         className="px-4 py-1.5 bg-blue-700 hover:bg-blue-600 text-sm text-white rounded transition-colors"
@@ -124,6 +128,88 @@ function Section({ title, children }: { title: string; children: React.ReactNode
     <div>
       <div className="text-xs text-slate-500 uppercase tracking-widest mb-3">{title}</div>
       {children}
+    </div>
+  );
+}
+
+function CustomDetectorList({ form, setForm }: {
+  form: AppSettings; setForm: (s: AppSettings) => void;
+}) {
+  const t = useT();
+  const [command, setCommand] = useState("");
+  const [args, setArgs] = useState("");
+  const [timeoutMs, setTimeoutMs] = useState(3000);
+
+  const add = () => {
+    if (!command.trim()) return;
+    const detector: PluginDetectorConfig = {
+      id: crypto.randomUUID(),
+      command: command.trim(),
+      args: args.trim() ? args.trim().split(/\s+/) : [],
+      timeout_ms: timeoutMs,
+    };
+    setForm({ ...form, custom_detectors: [...form.custom_detectors, detector] });
+    setCommand("");
+    setArgs("");
+    setTimeoutMs(3000);
+  };
+
+  const remove = (id: string) => {
+    setForm({ ...form, custom_detectors: form.custom_detectors.filter(d => d.id !== id) });
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="text-xs text-slate-500">{t("settings.customDetectorsHint")}</div>
+
+      <div className="space-y-1.5">
+        {form.custom_detectors.map(d => (
+          <div key={d.id} className="flex items-center justify-between bg-slate-800 rounded px-3 py-2">
+            <div>
+              <div className="text-sm text-slate-200 font-mono">{d.command} {d.args.join(" ")}</div>
+              <div className="text-xs text-slate-500">{t("settings.timeoutMs")}: {d.timeout_ms}</div>
+            </div>
+            <button
+              onClick={() => remove(d.id)}
+              className="text-slate-600 hover:text-red-400 text-xs transition-colors"
+            >
+              {t("settings.remove")}
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="space-y-2 pt-2 border-t border-slate-700">
+        <input
+          type="text"
+          value={command}
+          onChange={e => setCommand(e.target.value)}
+          placeholder={t("settings.command")}
+          className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono"
+        />
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={args}
+            onChange={e => setArgs(e.target.value)}
+            placeholder={t("settings.args")}
+            className="flex-1 bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-slate-500 font-mono"
+          />
+          <input
+            type="number"
+            value={timeoutMs}
+            onChange={e => setTimeoutMs(Number(e.target.value))}
+            title={t("settings.timeoutMs")}
+            className="w-24 bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-slate-500 font-mono"
+          />
+          <button
+            onClick={add}
+            className="px-3 py-1.5 bg-blue-700 hover:bg-blue-600 text-sm text-white rounded transition-colors"
+          >
+            {t("settings.addDetector")}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

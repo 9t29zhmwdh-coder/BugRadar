@@ -1,10 +1,16 @@
 // Re-export from models: the generic RollingWindow lives in models/anomaly.rs
 // This module provides source-level rolling windows per source_id
+use std::collections::VecDeque;
+
 use chrono::Duration;
 use dashmap::DashMap;
 
 use crate::models::anomaly::RollingWindow;
 use crate::models::log_entry::LogLevel;
+
+/// Custom detectors need to see real log text, not just level counts, but
+/// keeping every message forever would defeat the point of a rolling window.
+const RECENT_MESSAGES_CAP: usize = 50;
 
 #[derive(Debug)]
 pub struct SourceWindow {
@@ -20,6 +26,8 @@ pub struct SourceWindow {
     pub total_entries: u64,
     /// Error count last tick
     pub error_count_last_tick: u64,
+    /// Most recent log messages, oldest first, capped at `RECENT_MESSAGES_CAP`.
+    pub recent_messages: VecDeque<String>,
 }
 
 impl SourceWindow {
@@ -32,6 +40,7 @@ impl SourceWindow {
             latency_window: RollingWindow::new(dur),
             total_entries: 0,
             error_count_last_tick: 0,
+            recent_messages: VecDeque::new(),
         }
     }
 
@@ -45,6 +54,13 @@ impl SourceWindow {
                 self.warn_window.push(1.0);
             }
             _ => {}
+        }
+    }
+
+    pub fn record_message(&mut self, message: &str) {
+        self.recent_messages.push_back(message.to_string());
+        if self.recent_messages.len() > RECENT_MESSAGES_CAP {
+            self.recent_messages.pop_front();
         }
     }
 

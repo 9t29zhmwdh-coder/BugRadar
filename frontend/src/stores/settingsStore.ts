@@ -22,6 +22,7 @@ const DEFAULT_SETTINGS: AppSettings = {
     min_samples_for_baseline: 10,
     incident_correlation_window_seconds: 120,
   },
+  custom_detectors: [],
 };
 
 export const useSettingsStore = create<SettingsState>((set) => ({

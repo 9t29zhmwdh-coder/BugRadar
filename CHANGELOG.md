@@ -5,6 +5,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.3.0] - 2026-07-13
+
+### Added
+
+- Plugin API for custom detectors: configure any executable in Settings → Custom Detectors, and BugRadar spawns it once per tick per active log source, sending a JSON snapshot of that source's window on stdin and reading anomalies back from stdout. Implemented as a subprocess boundary (like an mdBook preprocessor or a pre-commit hook) rather than a dynamically loaded `.so`/`.dll`, since Rust gives no ABI stability guarantee across compiler versions. Closes the plugin-API blocker in this repo's Dual-Licensing Readiness assessment (ROADMAP.md); the multi-machine/fleet-aggregation blocker remains open by design.
+- `SourceWindow` now retains the last 50 log messages per source (`recent_messages`), so custom detectors can match on real log text, not just level counts.
+
 ## [0.2.7] - 2026-07-12
 
 ### Fixed
