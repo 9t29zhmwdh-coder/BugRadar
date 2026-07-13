@@ -63,6 +63,10 @@ const translations: Record<Lang, Dict> = {
       watchSources: "Watch Sources", remove: "Remove",
       labelOptional: "Label (optional)", watch: "Watch",
       savedCheck: "Saved", saveSettings: "Save Settings",
+      customDetectors: "Custom Detectors",
+      customDetectorsHint: "Runs your own executable as a detector: BugRadar sends it a JSON snapshot of a source's window on stdin once per tick and reads anomalies back from stdout. See README.",
+      command: "Command", args: "Args (space-separated)",
+      timeoutMs: "Timeout (ms)", addDetector: "Add Detector",
     },
   },
   de: {
@@ -119,6 +123,10 @@ const translations: Record<Lang, Dict> = {
       watchSources: "Überwachte Quellen", remove: "Entfernen",
       labelOptional: "Bezeichnung (optional)", watch: "Beobachten",
       savedCheck: "Gespeichert", saveSettings: "Einstellungen speichern",
+      customDetectors: "Eigene Detektoren",
+      customDetectorsHint: "Führt eine eigene ausführbare Datei als Detektor aus: BugRadar sendet ihr einmal pro Tick einen JSON-Snapshot des Fenster-Zustands einer Quelle via stdin und liest Anomalien von stdout zurück. Siehe README.",
+      command: "Befehl", args: "Argumente (leerzeichengetrennt)",
+      timeoutMs: "Timeout (ms)", addDetector: "Detektor hinzufügen",
     },
   },
 };

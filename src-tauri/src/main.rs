@@ -35,8 +35,19 @@ fn main() {
                 };
 
                 if let Some(rx) = log_rx {
+                    let custom_detectors = state
+                        .db
+                        .get_setting("app_settings")
+                        .await
+                        .ok()
+                        .flatten()
+                        .and_then(|raw| serde_json::from_str::<commands::AppSettings>(&raw).ok())
+                        .map(|s| s.custom_detectors)
+                        .unwrap_or_default();
+
                     let anomaly_rx_opt = {
                         let mut eng = state.anomaly_engine.lock().await;
+                        eng.set_custom_detectors(custom_detectors);
                         eng.spawn(rx);
                         eng.take_receiver()
                     };

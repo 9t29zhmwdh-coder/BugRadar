@@ -7,6 +7,7 @@ pub mod ai;
 
 use tauri::State;
 use crate::{error::BrResult, state::AppState};
+use br_core::anomaly::PluginDetectorConfig;
 use br_core::models::anomaly::AnomalyConfig;
 use serde::{Deserialize, Serialize};
 
@@ -17,6 +18,8 @@ pub struct AppSettings {
     pub ollama_model: String,
     pub log_retention_days: i64,
     pub anomaly_config: AnomalyConfig,
+    #[serde(default)]
+    pub custom_detectors: Vec<PluginDetectorConfig>,
 }
 
 impl Default for AppSettings {
@@ -27,6 +30,7 @@ impl Default for AppSettings {
             ollama_model: "llama3.2".to_string(),
             log_retention_days: 7,
             anomaly_config: AnomalyConfig::default(),
+            custom_detectors: Vec::new(),
         }
     }
 }

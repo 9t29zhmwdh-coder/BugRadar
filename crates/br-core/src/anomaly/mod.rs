@@ -1,6 +1,7 @@
 pub mod rolling_window;
 pub mod incident_grouper;
 pub mod detectors;
+pub mod external_detector;
 
 use std::sync::Arc;
 use std::time::Duration;
@@ -16,6 +17,7 @@ use crate::models::log_entry::LogEntry;
 use rolling_window::{SourceWindow, SourceWindows};
 use incident_grouper::IncidentGrouper;
 use detectors::{AnomalyDetector, ErrorSpikeDetector, LatencyJumpDetector, MemoryLeakDetector};
+pub use external_detector::PluginDetectorConfig;
 
 pub struct AnomalyEvent {
     pub anomaly: Anomaly,
@@ -28,6 +30,7 @@ pub struct AnomalyEngine {
     pub anomaly_rx: Option<mpsc::Receiver<AnomalyEvent>>,
     config: Arc<AnomalyConfig>,
     source_windows: Arc<SourceWindows>,
+    custom_detectors: Arc<Vec<PluginDetectorConfig>>,
 }
 
 impl AnomalyEngine {
@@ -38,11 +41,18 @@ impl AnomalyEngine {
             anomaly_rx: Some(rx),
             config: Arc::new(config),
             source_windows: Arc::new(DashMap::new()),
+            custom_detectors: Arc::new(Vec::new()),
         }
     }
 
     pub fn take_receiver(&mut self) -> Option<mpsc::Receiver<AnomalyEvent>> {
         self.anomaly_rx.take()
+    }
+
+    /// Configures the external plugin detectors run alongside the built-in
+    /// ones. Call before `spawn`; has no effect on an already-running engine.
+    pub fn set_custom_detectors(&mut self, detectors: Vec<PluginDetectorConfig>) {
+        self.custom_detectors = Arc::new(detectors);
     }
 
     /// Spawn the background task that processes incoming log entries and detects anomalies.
@@ -53,6 +63,7 @@ impl AnomalyEngine {
         let tx = self.anomaly_tx.clone();
         let config = self.config.clone();
         let windows = self.source_windows.clone();
+        let custom_detectors = self.custom_detectors.clone();
 
         tokio::spawn(async move {
             let detectors: Vec<Box<dyn AnomalyDetector>> = vec![
@@ -71,6 +82,7 @@ impl AnomalyEngine {
                             .entry(entry.source_id.clone())
                             .or_insert_with(|| SourceWindow::new(config.window_seconds));
                         window.record_entry_level(&entry.level);
+                        window.record_message(&entry.message);
 
                         // Extract latency from structured fields if present
                         if let Some(lat) = entry.fields.get("latency_ms").or_else(|| entry.fields.get("duration_ms")) {
@@ -84,13 +96,32 @@ impl AnomalyEngine {
                         let source_ids: Vec<String> = windows.iter().map(|e| e.key().clone()).collect();
 
                         for source_id in source_ids {
-                            let anomalies = {
+                            let (mut anomalies, snapshot) = {
                                 let mut window = windows.get_mut(&source_id).unwrap();
                                 window.flush_tick();
-                                detectors.iter()
+                                let anomalies = detectors.iter()
                                     .flat_map(|d| d.detect(&source_id, &window, &config))
-                                    .collect::<Vec<_>>()
+                                    .collect::<Vec<_>>();
+                                // Snapshot before dropping the lock: a plugin process must
+                                // never hold up other sources' detection on the same tick.
+                                let snapshot = if custom_detectors.is_empty() {
+                                    None
+                                } else {
+                                    Some(external_detector::SourceWindowSnapshot::capture(&window))
+                                };
+                                (anomalies, snapshot)
                             };
+
+                            if let Some(snapshot) = &snapshot {
+                                for detector_config in custom_detectors.iter() {
+                                    let plugin_anomalies = external_detector::run_external_detector(
+                                        detector_config,
+                                        &source_id,
+                                        snapshot,
+                                    ).await;
+                                    anomalies.extend(plugin_anomalies);
+                                }
+                            }
 
                             for anomaly in anomalies {
                                 debug!("Anomaly detected: {:?} on {}", anomaly.kind, source_id);

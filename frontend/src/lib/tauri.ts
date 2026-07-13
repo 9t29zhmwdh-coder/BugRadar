@@ -124,12 +124,20 @@ export interface AnomalyConfig {
   incident_correlation_window_seconds: number;
 }
 
+export interface PluginDetectorConfig {
+  id: string;
+  command: string;
+  args: string[];
+  timeout_ms: number;
+}
+
 export interface AppSettings {
   ai_provider: string;
   ollama_host: string;
   ollama_model: string;
   log_retention_days: number;
   anomaly_config: AnomalyConfig;
+  custom_detectors: PluginDetectorConfig[];
 }
 
 // ─── Invoke wrappers ──────────────────────────────────────────────────────────

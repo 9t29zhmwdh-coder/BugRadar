@@ -43,6 +43,7 @@ BugRadar's UI is available in English (default) and German; switch anytime with 
 | **System Monitoring** | CPU, RAM, Disk, Network, Docker container status |
 | **Config Inspector** | Analyzes YAML/JSON/TOML files for issues and conflicts |
 | **Timeline View** | Recharts-powered anomaly timeline and heatmap |
+| **Custom Detectors** | Plug in your own executable as a detector, in any language: Settings → Custom Detectors |
 
 ---
 
@@ -96,6 +97,52 @@ No other files or background services are left behind.
 | **Ollama (local)** | Install [Ollama](https://ollama.ai), run `ollama pull llama3.2`, set the host/model in Settings |
 
 AI analysis runs on demand: click "Run AI Analysis" on any incident. (Auto-triggering for High-severity incidents with 3+ anomalies is implemented in `Incident::should_trigger_ai()` but not wired up to the collector yet, see ROADMAP.md.)
+
+---
+
+## Custom Detectors
+
+Beyond the built-in detectors (error spike, latency jump, memory leak), BugRadar can run your own executable as a detector, in any language. Configure one in Settings → Custom Detectors: a command, optional arguments, and a timeout.
+
+Once per tick, for every active log source, BugRadar spawns your command as a fresh subprocess, writes one JSON line describing that source's current window to its stdin, and reads one JSON line of anomalies back from its stdout:
+
+```json
+// stdin (BugRadar → your plugin)
+{
+  "source_id": "app-1",
+  "total_entries": 812,
+  "error_count_last_tick": 3,
+  "warn_count_in_window": 5,
+  "error_rate_mean": 1.2,
+  "latency_samples_ms": [42.1, 58.0],
+  "recent_messages": ["disk full: /var", "..."]
+}
+```
+
+```json
+// stdout (your plugin → BugRadar)
+{
+  "anomalies": [
+    { "label": "disk full", "value": 9.0, "baseline": 1.0, "contributing_entries": ["disk full: /var"] }
+  ]
+}
+```
+
+A minimal Python example (any executable works, this is just the most portable to paste):
+
+```python
+#!/usr/bin/env python3
+import json, sys
+
+request = json.load(sys.stdin)
+anomalies = []
+if any("disk full" in m for m in request["recent_messages"]):
+    anomalies.append({"label": "disk full", "value": 1.0, "baseline": 0.0,
+                       "contributing_entries": request["recent_messages"]})
+json.dump({"anomalies": anomalies}, sys.stdout)
+```
+
+This runs as a subprocess, not a dynamically loaded library: Rust gives no ABI stability guarantee across compiler versions, so a `dlopen`'d plugin compiled with a different rustc than BugRadar itself would be undefined behavior waiting to happen. A process boundary avoids that entirely and lets a detector be written in any language, at the cost of a small per-tick spawn overhead. A misbehaving plugin (crash, invalid JSON, timeout) only drops that plugin's findings for that tick; it never affects the built-in detectors or other sources.
 
 ---
 
