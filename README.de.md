@@ -51,7 +51,7 @@ Die Oberfläche von BugRadar ist auf Englisch (Standard) und Deutsch verfügbar;
 - [Rust](https://rustup.rs/) 1.77+
 - [Node.js](https://nodejs.org/) 20+
 - [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
-- Ein [Anthropic API-Key](https://console.anthropic.com/) (Standard-Anbieter) oder lokal laufendes [Ollama](https://ollama.ai)
+- Ein [Anthropic API-Key](https://console.anthropic.com/) (Standard-Anbieter) oder lokal laufendes [Ollama](https://ollama.ai) (optional, für KI-Ursachenanalysen)
 - macOS / Windows / Linux
 
 ---

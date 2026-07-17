@@ -5,6 +5,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.3.1] - 2026-07-17
+
+### Changed
+
+- README/README.de: marked the Anthropic/Ollama requirement as
+  "(optional, for AI root-cause explanations)" — detection, clustering
+  and incident grouping already work without either configured.
+
 ## [0.3.0] - 2026-07-13
 
 ### Added

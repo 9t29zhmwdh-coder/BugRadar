@@ -52,7 +52,7 @@ BugRadar's UI is available in English (default) and German; switch anytime with 
 - [Rust](https://rustup.rs/) 1.77+
 - [Node.js](https://nodejs.org/) 20+
 - [Tauri CLI v2](https://tauri.app/): `cargo install tauri-cli`
-- An [Anthropic API key](https://console.anthropic.com/) (default AI provider) or [Ollama](https://ollama.ai) running locally
+- An [Anthropic API key](https://console.anthropic.com/) (default AI provider) or [Ollama](https://ollama.ai) running locally (optional, for AI root-cause explanations)
 - macOS / Windows / Linux
 
 ---
