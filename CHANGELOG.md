@@ -5,6 +5,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.1] - 2026-07-20
+
+### Changed
+
+- OpenSSF Scorecard workflow and badge.
+- `copilot-instructions.md` for consistent AI-assisted contributions.
+- Removed a stray em-dash from the CHANGELOG.
+- Split the README's security/CI badges onto their own line, separate from the platform/tech/AI badges (they were rendering as a single merged line).
+
 ## [1.0.0] - 2026-07-17
 
 First stable release: a real, packaged, installable distribution exists
@@ -20,7 +29,7 @@ for end users. Real macOS/Windows/Linux installers (DMG, NSIS, AppImage/deb/rpm)
 ### Changed
 
 - README/README.de: marked the Anthropic/Ollama requirement as
-  "(optional, for AI root-cause explanations)" — detection, clustering
+  "(optional, for AI root-cause explanations)": detection, clustering
   and incident grouping already work without either configured.
 
 ## [0.3.0] - 2026-07-13
