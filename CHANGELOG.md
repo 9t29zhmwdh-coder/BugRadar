@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.2] - 2026-07-28
+
+### Added
+
+- `.github/dependabot.yml`, covering GitHub Actions, the Cargo workspace and the frontend npm packages, with grouped weekly updates. The file was missing, and without it a repository gets no version updates at all: security alerts only fire for disclosed vulnerabilities. The pinned `actions/checkout` SHA here had been sitting on v6 while v7.0.1 was current. Follows `engineering-standards` v0.10.0.
+
 ## [1.0.1] - 2026-07-20
 
 ### Changed
