@@ -5,6 +5,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.4] - 2026-07-28
+
+### Changed
+
+- CodeQL moved from GitHub's default setup to an advanced setup with a committed `.github/workflows/codeql.yml`. The default setup decides on its own when to run and skips pull requests that touch no code of a given language. A dependency pull request changing only a lock file therefore reported `skipping` on `Analyze (actions)`, `Analyze (javascript-typescript)` and `Analyze (rust)` forever, and since those are required checks, every such pull request was permanently unmergeable. The workflow runs on every pull request regardless of what changed, so the checks are always produced.
+- The generic `CodeQL` status check was removed from the ruleset's required checks. It is produced only by the default setup and no longer exists after this change. The four language analyses stay required, so the merge gate is unchanged in substance and now fires more reliably than before.
+
 ## [1.0.3] - 2026-07-28
 
 ### Security
