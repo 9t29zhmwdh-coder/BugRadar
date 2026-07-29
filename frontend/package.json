@@ -1,6 +1,6 @@
 {
   "name": "bugradar-frontend",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,15 +11,15 @@
   "dependencies": {
     "@tauri-apps/api": "^2",
     "clsx": "^2",
-    "date-fns": "^3",
-    "react": "^18",
-    "react-dom": "^18",
-    "recharts": "^2",
-    "zustand": "^4"
+    "date-fns": "^4.4.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "recharts": "^3.10.1",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "autoprefixer": "^10",
     "esbuild": "^0.28.1",
