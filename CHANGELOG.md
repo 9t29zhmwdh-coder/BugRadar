@@ -5,6 +5,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.10] - 2026-07-29
+
+### Changed
+
+- TypeScript 5.9 to 7.0, the native compiler. Type checking this project drops from about 0.60 s to about 0.21 s, measured over three runs each. The published figure of ten times faster describes large codebases; at 25 source files the gain is smaller but real.
+
+### Added
+
+- `src/vite-env.d.ts`, referencing `vite/client`. Vite has always declared modules for `*.css` and the other asset types it handles, but nothing in this project pulled that declaration in. TypeScript 5 accepted the untyped side-effect import of `index.css` regardless; TypeScript 7 rejects it with `TS2882`. The file is part of Vite's own project scaffold and was simply missing here.
+
+---
+
 ## [1.0.9] - 2026-07-29
 
 ### Changed

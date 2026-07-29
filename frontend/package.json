@@ -1,6 +1,6 @@
 {
   "name": "bugradar-frontend",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "private": true,
   "type": "module",
   "scripts": {
@@ -24,7 +24,7 @@
     "@vitejs/plugin-react": "^6.0.3",
     "esbuild": "^0.28.1",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5",
+    "typescript": "^7.0.2",
     "vite": "^8.1.4"
   }
 }
