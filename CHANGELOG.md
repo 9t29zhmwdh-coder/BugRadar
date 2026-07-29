@@ -5,6 +5,21 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.9] - 2026-07-29
+
+### Changed
+
+- Tailwind CSS 3 to 4. This is a migration rather than a version bump: the PostCSS plugin is replaced by `@tailwindcss/vite`, and the three `@tailwind` directives in `index.css` become a single `@import "tailwindcss"`.
+- The generated stylesheet grows from 3.6 KB to 6.1 KB gzipped. Tailwind 4 exposes its design tokens as CSS custom properties in a `@layer theme` block, which is emitted whether or not a token is referenced. That is the cost of the new architecture, not a regression in what gets purged.
+
+### Removed
+
+- `autoprefixer` and `postcss`. Tailwind 4 handles vendor prefixing itself, and with the Vite plugin in place there is no PostCSS pipeline left for them to sit in.
+- `postcss.config.js`, which only wired up those two plugins.
+- `tailwind.config.ts`. Its `content` array is now detected automatically, and its only other content was a `brand` colour scale that no file referenced: none of the five hex values appeared in the built stylesheet, and no `brand-*` class appeared in any component. Tailwind 4 no longer picks up a JavaScript config automatically, so leaving the file would have been worse than deleting it: someone editing a colour there would see no effect.
+
+---
+
 ## [1.0.8] - 2026-07-29
 
 ### Changed
