@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 permissions:
-  contents: write
+  contents: read
   packages: read
 
 env:
@@ -26,6 +26,11 @@ jobs:
             args: ''
 
     runs-on: ${{ matrix.platform }}
+    permissions:
+      # Nur was ueber das workflow-weite contents: read hinausgeht.
+      # Read-Rechte hier zu wiederholen ist das, was OpenSSF Scorecard
+      # als zu weite Token-Berechtigung bemaengelt.
+      contents: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
 
