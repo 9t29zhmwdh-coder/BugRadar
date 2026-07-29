@@ -5,6 +5,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.8] - 2026-07-29
+
+### Changed
+
+- React 18 to 19, with the matching `@types` packages. The upgrade needs no source change here: the codebase uses no `forwardRef`, no `defaultProps`, no `propTypes` and no `ReactDOM.render`, which is where React 19's removals land.
+- `zustand` 4 to 5, `date-fns` 3 to 4 and `recharts` 2 to 3, none of which required a source change either.
+- These four arrived in one grouped pull request together with the Tailwind 4 upgrade. Tailwind is a real migration and is kept separate, so the part that is a version bump can be reviewed as one.
+
+---
+
 ## [1.0.7] - 2026-07-29
 
 ### Changed
