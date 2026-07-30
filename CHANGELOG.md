@@ -5,6 +5,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.12] - 2026-07-30
+
+### Added
+
+- `Cargo.lock` is committed. It was listed in `.gitignore`, so every build resolved dependencies afresh and no two builds were guaranteed to use the same versions. For an application rather than a library the lock file belongs in the repository: it is what makes a release reproducible and what lets a security advisory be checked against what actually shipped.
+- A test that stores a secret and reads it back from a second process. A store-then-read inside one process is satisfied by `keyring`'s in-memory fallback, so it would pass even with no platform backend compiled in, which is how the same defect went unnoticed in two other tools this month. The test treats a failure to reach the store as a missing service rather than a missing backend, which is what a Linux CI runner without a D-Bus secret service looks like.
+
+---
+
 ## [1.0.11] - 2026-07-30
 
 ### Changed
