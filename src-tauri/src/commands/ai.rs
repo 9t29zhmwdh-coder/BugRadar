@@ -29,7 +29,15 @@ pub async fn trigger_ai_analysis(incident_id: String, app: AppHandle, state: Sta
     let analyzer: Box<dyn AiAnalyzer> = match settings.ai_provider.as_str() {
         "ollama" => Box::new(OllamaAnalyzer::new(&settings.ollama_host, &settings.ollama_model)),
         _ => {
+            // Ohne Schluessel gar nicht erst senden. Vorher baute dieser Zweig
+            // den Analyzer mit einem leeren Schluessel, die Anfrage ging samt
+            // Logzeilen an die API und scheiterte erst dort an der Anmeldung.
             let key = get_api_key_internal().await.unwrap_or_default();
+            if key.is_empty() {
+                return Err(crate::error::BrError::Ai(
+                    "No Claude API key configured. Set one in settings, or switch the AI provider to Ollama.".to_string(),
+                ));
+            }
             Box::new(ClaudeAnalyzer::new(key))
         }
     };
