@@ -5,6 +5,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.14] - 2026-07-31
+
+### Changed
+
+- The exclusion paragraph now names LogLens as well. LogLens 1.0.10 points here for the live-watching case; without the reverse pointer a visitor landing on this side still had to work out which of the two applies to them.
+
+---
+
 ## [1.0.13] - 2026-07-31
 
 ### Changed

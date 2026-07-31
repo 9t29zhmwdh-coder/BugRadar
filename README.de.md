@@ -24,7 +24,10 @@ Modell ist deine Wahl: eine lokale Ollama-Instanz, oder Claude mit API-Key.
 **Nichts für dich, wenn** du eine Flotte betreibst und Alerting mit
 On-Call-Weiterleitung brauchst. Das Feld gehört Grafana, Prometheus oder
 Datadog. Das hier ist ein Desktop-Fenster für eine Maschine, auf die du
-tatsächlich draufschaust.
+tatsächlich draufschaust. Und wenn der Vorfall schon vorbei ist und du bloss
+das Log lesbar haben willst, klappt
+[LogLens](https://github.com/9t29zhmwdh-coder/LogLens) die doppelten Fehler
+zusammen, statt auf neue zu warten.
 
 [![CI](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/actions) [![CodeQL](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/security/code-scanning) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/9t29zhmwdh-coder/BugRadar/badge)](https://securityscorecards.dev/viewer/?uri=github.com/9t29zhmwdh-coder/BugRadar) [![OpenSSF Best Practices](https://bestpractices.dev/projects/13716/badge)](https://bestpractices.dev/projects/13716)
 
