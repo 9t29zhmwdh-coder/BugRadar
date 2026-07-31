@@ -5,6 +5,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.1.1] - 2026-07-31
+
+### Changed
+
+- `@vitejs/plugin-react` 6.0.3 to 6.0.4 and `vite` to its matching patch, both build-time dependencies that do not ship in the application. The Dependabot pull request had been open since 29 July without being mergeable: the ruleset requires `Check (ubuntu-latest)`, `(macos-latest)` and `(windows-latest)`, and the branch predated the move to a three-platform matrix, so it only ever reported a single `Check` and the required contexts never arrived. A rebase onto current main picked up the new workflow.
+
+---
+
 ## [1.1.0] - 2026-07-31
 
 ### Security
