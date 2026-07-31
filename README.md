@@ -7,9 +7,23 @@
 
 [🇩🇪 Deutsche Version](README.de.md)
 
-**AI-powered real-time diagnostics and monitoring tool, built with Rust and Tauri.**
+**Watches your logs so you do not have to, and explains the spike when it happens.**
 
-BugRadar watches your log files, Docker containers, and system metrics in real-time, automatically detects anomalies, groups them into incidents, and generates AI-driven root-cause analyses with actionable fix suggestions.
+Something starts throwing errors at 3pm. By the time you notice, the log has
+scrolled past it, and reconstructing what went wrong means reading thousands of
+lines to find the twenty that matter.
+
+BugRadar sits on your log files, Docker containers and system metrics, flags
+the moment a rate or a latency breaks from its own normal, and groups the
+related noise into one incident rather than forty alerts. Ask it, and a model
+reads the incident and says what it thinks caused it.
+
+Point it at a file or a container, and that is the setup. The model is your
+choice: a local Ollama instance, or Claude with an API key.
+
+**Not for you if** you are running a fleet and need alerting with on-call
+routing. Grafana, Prometheus or Datadog own that ground. This is a desktop
+window for a machine you are actually looking at.
 
 [![CI](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/actions) [![CodeQL](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/security/code-scanning) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/9t29zhmwdh-coder/BugRadar/badge)](https://securityscorecards.dev/viewer/?uri=github.com/9t29zhmwdh-coder/BugRadar) [![OpenSSF Best Practices](https://bestpractices.dev/projects/13716/badge)](https://bestpractices.dev/projects/13716)
 

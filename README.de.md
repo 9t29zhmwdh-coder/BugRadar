@@ -6,9 +6,25 @@
 
 [🇬🇧 English Version](README.md)
 
-**KI-gestütztes Echtzeit-Diagnose- und Monitoring-Tool, entwickelt mit Rust und Tauri.**
+**Schaut dir auf die Logs, damit du es nicht musst, und erklärt den Ausschlag, wenn er kommt.**
 
-BugRadar überwacht Logdateien, Docker-Container und Systemmetriken in Echtzeit, erkennt Anomalien automatisch, gruppiert sie zu Incidents und generiert AI-basierte Root-Cause-Analysen mit konkreten Fix-Vorschlägen.
+Um 15 Uhr fängt irgendwas an, Fehler zu werfen. Bis du es merkst, ist das Log
+längst weitergelaufen, und herauszufinden, was schiefging, heisst tausende
+Zeilen zu lesen, um die zwanzig relevanten zu finden.
+
+BugRadar sitzt auf deinen Logdateien, Docker-Containern und Systemmetriken,
+markiert den Moment, in dem eine Rate oder eine Latenz aus ihrem eigenen Normal
+ausbricht, und fasst das zusammengehörende Rauschen zu einem Incident statt zu
+vierzig Meldungen. Auf Zuruf liest ein Modell den Incident und sagt, was seiner
+Einschätzung nach die Ursache war.
+
+Du zeigst auf eine Datei oder einen Container, das ist die Einrichtung. Das
+Modell ist deine Wahl: eine lokale Ollama-Instanz, oder Claude mit API-Key.
+
+**Nichts für dich, wenn** du eine Flotte betreibst und Alerting mit
+On-Call-Weiterleitung brauchst. Das Feld gehört Grafana, Prometheus oder
+Datadog. Das hier ist ein Desktop-Fenster für eine Maschine, auf die du
+tatsächlich draufschaust.
 
 [![CI](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/actions) [![CodeQL](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/security/code-scanning) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/9t29zhmwdh-coder/BugRadar/badge)](https://securityscorecards.dev/viewer/?uri=github.com/9t29zhmwdh-coder/BugRadar) [![OpenSSF Best Practices](https://bestpractices.dev/projects/13716/badge)](https://bestpractices.dev/projects/13716)
 

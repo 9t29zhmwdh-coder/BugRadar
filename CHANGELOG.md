@@ -5,6 +5,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.0.13] - 2026-07-31
+
+### Changed
+
+- Both READMEs now open with the situation the tool is for, which is an error spike you notice too late to reconstruct from the log, rather than with the four things the code does. A short paragraph sends people who need fleet alerting with on-call routing to Grafana, Prometheus or Datadog instead.
+
+---
+
 ## [1.0.12] - 2026-07-30
 
 ### Added
