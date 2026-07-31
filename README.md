@@ -23,7 +23,10 @@ choice: a local Ollama instance, or Claude with an API key.
 
 **Not for you if** you are running a fleet and need alerting with on-call
 routing. Grafana, Prometheus or Datadog own that ground. This is a desktop
-window for a machine you are actually looking at.
+window for a machine you are actually looking at. And if the incident is
+already over and you just want the log readable,
+[LogLens](https://github.com/9t29zhmwdh-coder/LogLens) collapses the duplicate
+errors instead of watching for new ones.
 
 [![CI](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/ci.yml/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/actions) [![CodeQL](https://github.com/9t29zhmwdh-coder/BugRadar/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/9t29zhmwdh-coder/BugRadar/security/code-scanning) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/9t29zhmwdh-coder/BugRadar/badge)](https://securityscorecards.dev/viewer/?uri=github.com/9t29zhmwdh-coder/BugRadar) [![OpenSSF Best Practices](https://bestpractices.dev/projects/13716/badge)](https://bestpractices.dev/projects/13716)
 
