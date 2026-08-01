@@ -19,13 +19,13 @@ thiserror   = { workspace = true }
 anyhow      = { workspace = true }
 tracing     = { workspace = true }
 
-notify                = "6"
-notify-debouncer-full = "0.3"
-bollard               = "0.18"
-sysinfo               = "0.33"
+notify                = "8"
+notify-debouncer-full = "0.7"
+bollard               = "0.21"
+sysinfo               = "0.39"
 sqlx = { workspace = true }
 serde_yaml  = "0.9"
-toml        = "0.8"
+toml        = "1.1"
 regex       = "1"
 dashmap     = "6"
 keyring       = { workspace = true }
