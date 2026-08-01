@@ -20,6 +20,7 @@ updates:
     groups:
       cargo:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
     ignore:
       # glib 0.18.5 carries GHSA-wrw7-89jp-8q8g. The fix is in 0.20, and this
       # project cannot get there: tauri 2.x pins gtk ^0.18, gtk 0.18 requires
@@ -46,3 +47,4 @@ updates:
     groups:
       npm:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
