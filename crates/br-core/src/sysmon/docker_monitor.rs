@@ -1,5 +1,5 @@
 use bollard::Docker;
-use bollard::container::ListContainersOptions;
+use bollard::query_parameters::ListContainersOptions;
 use serde::{Deserialize, Serialize};
 use anyhow::Result;
 
@@ -35,14 +35,23 @@ impl DockerMonitor {
     }
 
     pub async fn get_container_statuses(&self) -> Result<Vec<ContainerStatus>> {
-        let options = ListContainersOptions::<String> { all: true, ..Default::default() };
+        let options = ListContainersOptions { all: true, ..Default::default() };
         let containers = self.docker.list_containers(Some(options)).await?;
 
         let statuses = containers.into_iter().filter_map(|c| {
             let id = c.id.clone().unwrap_or_default();
             let name = c.names?.into_iter().next()?.trim_start_matches('/').to_string();
             let image = c.image.clone().unwrap_or_default();
-            let state_str = c.state.as_deref().unwrap_or("unknown").to_lowercase();
+            // bollard 0.21 liefert `state` als typisiertes Enum statt als String.
+            // Dessen Display gibt genau die Kleinbuchstaben-Bezeichnungen aus,
+            // die vorher direkt von Docker kamen ("running", "exited", ...),
+            // die Zuordnung darunter bleibt damit unveraendert.
+            let state_str = c
+                .state
+                .as_ref()
+                .map(|s| s.to_string())
+                .unwrap_or_else(|| "unknown".to_string())
+                .to_lowercase();
             let status = c.status.unwrap_or_default();
 
             let state = match state_str.as_str() {

@@ -1,5 +1,5 @@
 use bollard::Docker;
-use bollard::container::LogsOptions;
+use bollard::query_parameters::LogsOptions;
 use futures_util::StreamExt;
 use tokio::sync::mpsc;
 use tracing::{info, warn};
@@ -30,7 +30,7 @@ impl DockerCollector {
         tokio::spawn(async move {
             info!("Starting Docker log tail for container {}", container_id);
 
-            let options = LogsOptions::<String> {
+            let options = LogsOptions {
                 follow: true,
                 stdout: true,
                 stderr: true,
@@ -69,9 +69,9 @@ impl DockerCollector {
     }
 
     pub async fn list_containers(&self) -> anyhow::Result<Vec<(String, String)>> {
-        use bollard::container::ListContainersOptions;
+        use bollard::query_parameters::ListContainersOptions;
 
-        let options = ListContainersOptions::<String> {
+        let options = ListContainersOptions {
             all: false,
             ..Default::default()
         };
