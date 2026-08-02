@@ -5,6 +5,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.1.6] - 2026-08-02
+
+### Changed
+
+- `notify` 6.1.1 to 8.2.0 and `notify-debouncer-full` 0.3.2 to 0.7.0, in one step because neither moves alone. Raising `notify` by itself leaves the debouncer holding the old `Watcher` trait, and `debouncer.watcher().watch(..)` stops resolving. Raising the debouncer by itself hits a deprecation that `-D warnings` turns into an error. Dependabot proposed them as separate pull requests, and both failed for the other one's absence.
+- `.watcher()` is gone from the call site: from 0.7 the debouncer carries the `Watcher` methods itself, which also makes the `Watcher` import unnecessary.
+- The event handling needed nothing. This watcher re-reads on any debounced event rather than filtering by kind, so the Windows behaviour that broke LogLens, where an append arrives as `Modify(Any)` rather than `Modify(Data(..))`, never applied here. Checked rather than assumed, across every repository in the portfolio that uses `notify`.
+
+---
+
 ## [1.1.5] - 2026-08-02
 
 ### Changed
