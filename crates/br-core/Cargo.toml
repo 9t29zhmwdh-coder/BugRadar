@@ -21,7 +21,7 @@ tracing     = { workspace = true }
 
 notify                = "6"
 notify-debouncer-full = "0.3"
-bollard               = "0.18"
+bollard               = "0.21"
 sysinfo               = "0.33"
 sqlx = { workspace = true }
 serde_yaml  = "0.9"

@@ -5,6 +5,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.1.5] - 2026-08-02
+
+### Changed
+
+- `bollard` 0.18.1 to 0.21.0, the Docker client. The options types moved out of the topic modules into `query_parameters` and lost their generic parameter, so `bollard::container::LogsOptions::<String>` becomes `bollard::query_parameters::LogsOptions`. `ListContainersOptions::filters` is optional now rather than a bare map.
+- `ContainerSummary.state` is a typed enum in 0.21 instead of a string. Its `Display` prints exactly the lowercase names Docker used to send, `running`, `exited` and the rest, so the mapping onto `ContainerState` is unchanged and the monitor keeps classifying containers the way it did.
+
+---
+
 ## [1.1.4] - 2026-08-02
 
 ### Security
