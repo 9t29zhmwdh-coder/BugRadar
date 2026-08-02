@@ -22,7 +22,7 @@ tracing     = { workspace = true }
 notify                = "8"
 notify-debouncer-full = "0.7"
 bollard               = "0.21"
-sysinfo               = "0.33"
+sysinfo               = "0.39"
 sqlx = { workspace = true }
 serde_yaml  = "0.9"
 toml        = "0.8"
