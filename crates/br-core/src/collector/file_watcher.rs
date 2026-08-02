@@ -4,7 +4,7 @@ use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 use notify_debouncer_full::{new_debouncer, DebounceEventResult};
-use notify::{RecursiveMode, Watcher};
+use notify::RecursiveMode;
 use tokio::sync::mpsc;
 use tracing::{debug, warn};
 
@@ -102,7 +102,9 @@ pub fn spawn_file_tail(
             }
         };
 
-        if let Err(e) = debouncer.watcher().watch(&path_clone, RecursiveMode::NonRecursive) {
+        // `.watcher()` ist ab Debouncer 0.7 veraltet: der Debouncer bringt
+        // die Watcher-Methoden selbst mit.
+        if let Err(e) = debouncer.watch(&path_clone, RecursiveMode::NonRecursive) {
             warn!("Cannot watch {}: {}", path.display(), e);
             return;
         }

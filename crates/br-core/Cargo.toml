@@ -19,8 +19,8 @@ thiserror   = { workspace = true }
 anyhow      = { workspace = true }
 tracing     = { workspace = true }
 
-notify                = "6"
-notify-debouncer-full = "0.3"
+notify                = "8"
+notify-debouncer-full = "0.7"
 bollard               = "0.21"
 sysinfo               = "0.33"
 sqlx = { workspace = true }
