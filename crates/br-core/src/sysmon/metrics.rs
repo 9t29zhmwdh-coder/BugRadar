@@ -110,3 +110,51 @@ impl Default for MetricsCollector {
         Self::new()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Haelt die Einheiten fest, in denen `sysinfo` meldet.
+    ///
+    /// `collect` teilt den Speicher zweimal durch 1024 und nennt das Ergebnis
+    /// MB, den Plattenplatz einmal durch 1_073_741_824 fuer GB. Wechselt eine
+    /// neue Version auf Kilobyte, sind alle Werte um Faktor 1024 zu klein: die
+    /// Oberflaeche zeigt dann acht MB Arbeitsspeicher statt acht GB, und jede
+    /// Schwelle, die auf diesen Zahlen sitzt, loest nie mehr aus. Ein Compiler
+    /// bemerkt davon nichts.
+    #[test]
+    fn die_gemeldeten_einheiten_bleiben_wie_sie_sind() {
+        let mut sammler = MetricsCollector::new();
+        let werte = sammler.collect();
+
+        assert!(
+            werte.memory.total_mb >= 1024,
+            "Gesamtspeicher {} MB ist zu klein. Bei Kilobyte statt Bytes laege \
+             der Wert etwa um Faktor 1024 darunter.",
+            werte.memory.total_mb
+        );
+        assert!(
+            werte.memory.total_mb < 100_000_000,
+            "Gesamtspeicher {} MB ist unplausibel gross",
+            werte.memory.total_mb
+        );
+        assert!(werte.memory.used_mb <= werte.memory.total_mb);
+
+        assert!(
+            (0.0..=100.0).contains(&werte.cpu.usage_percent),
+            "CPU-Auslastung {} liegt ausserhalb von 0 bis 100",
+            werte.cpu.usage_percent
+        );
+        assert!(werte.cpu.core_count > 0);
+
+        for platte in &werte.disks {
+            assert!(
+                (0.0..=100.0).contains(&platte.usage_percent),
+                "Belegung {} von {} liegt ausserhalb von 0 bis 100",
+                platte.usage_percent,
+                platte.name
+            );
+        }
+    }
+}
