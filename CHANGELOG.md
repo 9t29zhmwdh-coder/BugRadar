@@ -5,6 +5,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.1.7] - 2026-08-04
+
+### Changed
+
+- `sysinfo` 0.33 to 0.39. The API surface used here compiles without edits, which says little for this crate: the risk is a changed unit, not a changed signature.
+
+### Added
+
+- A test that holds the reported units. `collect` divides memory by 1024 twice and calls the result MB, and disk space by 1_073_741_824 for GB. If a version switches to kilobytes, every value is off by a factor of 1024, the interface shows eight MB of memory instead of eight GB, and every threshold sitting on those numbers stops firing. No compiler notices that.
+
+---
+
 ## [1.1.6] - 2026-08-02
 
 ### Changed
