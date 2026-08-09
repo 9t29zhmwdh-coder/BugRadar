@@ -23,5 +23,5 @@ thiserror   = "2"
 anyhow      = "1"
 tracing     = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-sqlx        = { version = "0.8", features = ["sqlite", "runtime-tokio", "chrono", "uuid", "migrate", "macros"] }
+sqlx        = { version = "0.9", features = ["sqlite", "runtime-tokio", "chrono", "uuid", "migrate", "macros"] }
 keyring     = { version = "3", features = ["apple-native", "windows-native", "async-secret-service", "crypto-rust", "tokio"] }
