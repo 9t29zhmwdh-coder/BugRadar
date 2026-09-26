@@ -5,10 +5,13 @@ import { listen } from "@tauri-apps/api/event";
 
 export type LogLevel = "trace" | "debug" | "info" | "warn" | "error" | "fatal" | "unknown";
 
+// Must match the serde naming of br-core's WatchSourceKind (snake_case).
+// The camel-case variant names were rejected by the backend, so no source
+// could ever be added from the interface.
 export type WatchSourceKind =
-  | { FilePath: { path: string } }
-  | { DockerContainer: { container_id: string; container_name: string } }
-  | "DockerAllContainers";
+  | { file_path: { path: string } }
+  | { docker_container: { container_id: string; container_name: string } }
+  | "docker_all_containers";
 
 export interface WatchSource {
   id: string;

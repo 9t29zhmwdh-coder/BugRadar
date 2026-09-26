@@ -1,6 +1,6 @@
 {
   "productName": "BugRadar",
-  "version": "1.1.10",
+  "version": "1.2.0",
   "identifier": "com.raystudio.bugradar",
   "build": {
     "frontendDist": "../frontend/dist",
@@ -19,8 +19,7 @@
         "resizable": true,
         "fullscreen": false,
         "decorations": true,
-        "transparent": false,
-        "titleBarStyle": "Overlay"
+        "transparent": false
       }
     ],
     "security": {

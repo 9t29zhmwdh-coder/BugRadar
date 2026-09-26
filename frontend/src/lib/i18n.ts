@@ -4,6 +4,13 @@ export type Lang = "en" | "de";
 
 const STORAGE_KEY = "bugradar_lang";
 
+// An explicit choice wins; otherwise follow the system language.
+function initialLang(): Lang {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored === "en" || stored === "de") return stored;
+  return navigator.language.toLowerCase().startsWith("de") ? "de" : "en";
+}
+
 interface Dict {
   [key: string]: string | Dict;
 }
@@ -62,6 +69,8 @@ const translations: Record<Lang, Dict> = {
       windowSeconds: "Window (seconds)",
       watchSources: "Watch Sources", remove: "Remove",
       labelOptional: "Label (optional)", watch: "Watch",
+      kindFile: "Log file", kindContainer: "Docker container", kindAllContainers: "All Docker containers",
+      containerPlaceholder: "Container name or ID", watchFailed: "Could not watch this source:",
       savedCheck: "Saved", saveSettings: "Save Settings",
       customDetectors: "Custom Detectors",
       customDetectorsHint: "Runs your own executable as a detector: BugRadar sends it a JSON snapshot of a source's window on stdin once per tick and reads anomalies back from stdout. See README.",
@@ -122,6 +131,8 @@ const translations: Record<Lang, Dict> = {
       windowSeconds: "Fenster (Sekunden)",
       watchSources: "Überwachte Quellen", remove: "Entfernen",
       labelOptional: "Bezeichnung (optional)", watch: "Beobachten",
+      kindFile: "Logdatei", kindContainer: "Docker-Container", kindAllContainers: "Alle Docker-Container",
+      containerPlaceholder: "Container-Name oder ID", watchFailed: "Quelle konnte nicht beobachtet werden:",
       savedCheck: "Gespeichert", saveSettings: "Einstellungen speichern",
       customDetectors: "Eigene Detektoren",
       customDetectorsHint: "Führt eine eigene ausführbare Datei als Detektor aus: BugRadar sendet ihr einmal pro Tick einen JSON-Snapshot des Fenster-Zustands einer Quelle via stdin und liest Anomalien von stdout zurück. Siehe README.",
@@ -138,7 +149,7 @@ interface LangState {
 }
 
 export const useLangStore = create<LangState>((set) => ({
-  lang: (localStorage.getItem(STORAGE_KEY) as Lang) || "en",
+  lang: initialLang(),
   setLang: (lang) => {
     localStorage.setItem(STORAGE_KEY, lang);
     set({ lang });

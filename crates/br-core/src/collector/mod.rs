@@ -10,7 +10,7 @@ use tokio::task::JoinHandle;
 use tracing::info;
 
 use crate::models::log_entry::{LogEntry, WatchSource, WatchSourceKind};
-use crate::plugin::registry::PluginRegistry;
+use crate::plugin::registry::{PluginRegistry, FALLBACK_PARSER};
 use file_watcher::spawn_file_tail;
 
 pub struct LogCollector {
@@ -41,15 +41,15 @@ impl LogCollector {
         match &source.kind {
             WatchSourceKind::FilePath { path } => {
                 let parser_id = if source.parser_id == "auto" || source.parser_id.is_empty() {
-                    "plaintext".to_string()
+                    self.registry.detect(path).to_string()
                 } else {
                     source.parser_id.clone()
                 };
 
+                // An unknown parser id falls back to plaintext, which is always registered.
                 let parser = self.registry.create(&parser_id, &source.id, path)
-                    .unwrap_or_else(|| {
-                        self.registry.create("plaintext", &source.id, path).unwrap()
-                    });
+                    .or_else(|| self.registry.create(FALLBACK_PARSER, &source.id, path))
+                    .expect("plaintext parser is always registered");
 
                 info!("Watching file {} with parser {}", path, parser_id);
                 let handle = spawn_file_tail(
