@@ -1,6 +1,6 @@
 {
   "productName": "BugRadar",
-  "version": "1.1.10",
+  "version": "1.2.0",
   "identifier": "com.raystudio.bugradar",
   "build": {
     "frontendDist": "../frontend/dist",
@@ -19,12 +19,11 @@
         "resizable": true,
         "fullscreen": false,
         "decorations": true,
-        "transparent": false,
-        "titleBarStyle": "Overlay"
+        "transparent": false
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: asset: http://asset.localhost; connect-src 'self' ipc: http://ipc.localhost; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
     }
   },
   "bundle": {

@@ -77,6 +77,19 @@ fn main() {
                     }
                 }
 
+                // Sources are stored in the database but were only started when
+                // added, so after a restart they were listed and never tailed.
+                match br_core::db::queries::list_watch_sources(&state.db.pool).await {
+                    Ok(sources) => {
+                        let collector = state.collector.lock().await;
+                        for source in sources.iter().filter(|s| s.enabled) {
+                            collector.start_watching(source);
+                        }
+                        info!("Resumed {} watch source(s)", collector.active_source_ids().len());
+                    }
+                    Err(e) => tracing::warn!("Could not load watch sources: {e}"),
+                }
+
                 handle.manage(state);
                 info!("BugRadar initialized");
             });

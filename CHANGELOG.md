@@ -5,6 +5,27 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.2.0] - 2026-09-26
+
+### Fixed
+
+- Adding a log file in the dashboard never worked. The interface sent the source type as `FilePath` while the backend expects `file_path`, so the command was rejected, and the error went nowhere: the click simply did nothing.
+- Even with the right type, watching a file crashed the command. The collector falls back to the plaintext parser, but neither the plaintext nor the JSON parser was registered, and the fallback unwrapped an empty result. Both are registered now, and automatic detection checks nginx, Docker and JSON in a fixed order before falling back to plaintext; it used to pick a random match.
+- Sources added earlier were listed after a restart but never watched again. They are resumed at startup.
+- The window content sat under the macOS title bar buttons: the log source selector was hidden behind them, and the window could not be dragged. The window uses the standard title bar again.
+
+### Added
+
+- Docker containers can be added from the dashboard, a single container by name or ID, or all containers at once. The backend supported both, but the interface only offered files.
+- A failed attempt to add a source now shows the reason.
+- The interface follows the system language until you pick one.
+
+### Security
+
+- The app now runs with a Content Security Policy that only allows its own scripts, styles and images plus the Tauri bridge.
+
+---
+
 ## [1.1.10] - 2026-09-25
 
 ### Fixed
