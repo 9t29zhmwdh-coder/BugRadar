@@ -5,6 +5,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.2.1] - 2026-09-27
+
+### Changed
+
+Dependency and CI updates merged since v1.2.0, each with green checks:
+
+- chore(ci): bump the actions group across 1 directory with 5 updates (#78)
+- chore(deps): bump vite from 8.2.2 to 8.3.0 in /frontend in the npm group (#82)
+- chore(deps): bump the cargo group across 1 directory with 8 updates (#80)
+- chore(deps): bump the npm group across 1 directory with 8 updates (#76)
+
+---
+
 ## [1.2.0] - 2026-09-26
 
 ### Fixed
