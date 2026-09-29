@@ -25,7 +25,7 @@ bollard               = "0.21"
 sysinfo               = "0.39"
 sqlx = { workspace = true }
 serde_yaml  = "0.9"
-toml        = "0.8"
+toml        = "1.1"
 regex       = "1"
 dashmap     = "6"
 keyring       = { workspace = true }
