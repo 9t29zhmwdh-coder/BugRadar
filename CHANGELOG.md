@@ -5,6 +5,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.2.4] - 2026-09-30
+
+### Changed
+
+Dependency and CI updates merged since v1.2.3, each with green checks:
+
+- chore(deps): bump vite from 8.3.0 to 8.3.1 in /frontend in the npm group (#87)
+- chore(deps): bump toml in the cargo group (#86)
+
+---
+
 ## [1.2.3] - 2026-09-30
 
 ### Changed

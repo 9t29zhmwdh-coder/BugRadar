@@ -1,6 +1,6 @@
 {
   "productName": "BugRadar",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "identifier": "com.raystudio.bugradar",
   "build": {
     "frontendDist": "../frontend/dist",
