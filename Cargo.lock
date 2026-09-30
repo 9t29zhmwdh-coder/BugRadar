@@ -465,7 +465,7 @@ dependencies = [
 
 [[package]]
 name = "br-cli"
-version = "1.2.2"
+version = "1.2.3"
 dependencies = [
  "anyhow",
  "br-core",
@@ -479,7 +479,7 @@ dependencies = [
 
 [[package]]
 name = "br-core"
-version = "1.2.2"
+version = "1.2.3"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -536,7 +536,7 @@ dependencies = [
 
 [[package]]
 name = "bugradar-app"
-version = "1.2.2"
+version = "1.2.3"
 dependencies = [
  "anyhow",
  "br-core",
