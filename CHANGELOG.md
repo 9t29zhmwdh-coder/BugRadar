@@ -5,6 +5,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.2.2] - 2026-09-30
+
+### Changed
+
+Dependency and CI updates merged since v1.2.1, each with green checks:
+
+- chore(deps): bump toml from 0.8.23 to 1.1.4+spec-1.1.0 (#70)
+- chore(deps): bump sqlx from 0.8.6 to 0.9.0 (#69)
+
+---
+
 ## [1.2.1] - 2026-09-27
 
 ### Changed
